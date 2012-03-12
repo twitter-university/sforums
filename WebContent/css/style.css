@@ -1,0 +1,44 @@
+* {
+	font-family: Arial, Tahoma, sans-serif;
+}
+form table tr th, table.nameValuePairs tr th {
+	text-align: right;
+	vertical-align: top;
+}
+table thead tr th {
+	text-align: left;
+	background-color: #ddd;
+}
+.number {
+	text-align: right;
+}
+form input, form textarea {
+	padding: 2px;
+	border: 1px solid grey;
+	background-color: #ffd;
+	font-weight: normal;
+}
+table tbody tr td.small {
+	font-size: x-small;
+}
+a.button {
+	color: black;
+	padding: 2px 3px;
+	border: 1px solid grey;
+	background-color: #ffd;
+	text-decoration: none;
+	margin: 2px;
+}
+a.button:hover, form input[type="submit"]:hover {
+	background-color: black;
+	color: #ffd;
+}
+.error {
+	color: red;	
+}
+.navBar {
+	margin: 10px 0px;
+	font-size: small;
+	padding-bottom: 7px;
+	border-bottom: 1px solid black;
+}

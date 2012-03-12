@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [ ]>
+<project name="sforums" default="deploy-webapp">
+
+	<property file="build.properties" />
+
+	<property name="source.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="content.dir" value="${basedir}/WebContent" />
+	<property name="web-inf.dir" value="${content.dir}/WEB-INF" />
+	<property name="lib.dir" value="${web-inf.dir}/lib" />
+	<property name="build.war.file" value="${build.dir}/${deploy.app.name}.war" />
+	<property name="build.webapp.dir" value="${build.dir}/${deploy.app.name}" />
+	<property name="deploy.war.file" value="${deploy.dir}/${deploy.app.name}" />
+	<property name="deploy.webapp.dir" value="${deploy.dir}/${deploy.app.name}" />
+
+	<import file="${catalina-home.dir}/bin/catalina-tasks.xml" />
+
+	<path id="libs">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${catalina-lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean" description="Delete generated class and WAR files">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${source.dir}" destdir="${classes.dir}" 
+			classpathref="libs" debug="on" deprecation="on" includeantruntime="no" />
+		<copy todir="${classes.dir}">
+			<fileset dir="${source.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build-war" depends="compile" description="Build the WAR file">
+		<war destfile="${build.war.file}" webxml="${web-inf.dir}/web.xml">
+			<classes dir="${classes.dir}" />
+			<fileset dir="${content.dir}">
+				<exclude name="**/web.xml" />
+			</fileset>
+		</war>
+	</target>
+
+	<target name="deploy-war" depends="build-war" description="Deploy application to Tomcat as a WAR file">
+		<deploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" 
+			password="${tomcat.manager.password}" path="/${deploy.app.name}" war="${build.war.file}" />
+		<!-- 
+			<copy file="${build.war.file}" tofile="${deploy.war.file}" preservelastmodified="true" />
+		-->
+	</target>
+
+	<target name="deploy-webapp" depends="compile" description="Deploy application to Tomcat as a directory">
+		<mkdir dir="${deploy.webapp.dir}" />
+		<sync todir="${deploy.webapp.dir}">
+			<fileset dir="${content.dir}" />
+			<preserveintarget>
+				<include name="WEB-INF/classes/**" />
+			</preserveintarget>
+		</sync>
+		<mkdir dir="${deploy.webapp.dir}/WEB-INF/classes" />
+		<sync todir="${deploy.webapp.dir}/WEB-INF/classes">
+			<fileset dir="${classes.dir}" />
+		</sync>
+	</target>
+	
+	<target name="deploy-static" description="Re-deploy static content to Tomcat">
+		<copy todir="${deploy.webapp.dir}">
+			<fileset dir="${content.dir}">
+				<exclude name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="start" description="Start the application on Tomcat">
+		<start url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}" path="/${deploy.app.name}" />
+	</target>
+
+	<target name="stop" description="Stop the application on Tomcat">
+		<stop url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}" path="/${deploy.app.name}" />
+	</target>
+
+	<target name="undeploy" description="Uninstall the application from Tomcat ">
+		<undeploy url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}" path="/${deploy.app.name}" />
+	</target>
+	
+	<target name="reload" description="Reload the application on Tomcat">
+		<reload url="${tomcat.manager.url}" username="${tomcat.manager.username}" 
+			password="${tomcat.manager.password}" path="/${deploy.app.name}" />
+	</target>
+
+	<target name="redeploy" description="Deploy to Tomcat and reload application" 
+		depends="stop,deploy-webapp,start" />
+</project>

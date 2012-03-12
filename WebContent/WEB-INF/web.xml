@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+  xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <display-name>sforums</display-name>
+
+  <context-param>
+    <param-name>daoRepositoryClassName</param-name>
+    <param-value>sforums.dao.MySqlDaoRepository</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>CategoryList</servlet-name>
+    <servlet-class>sforums.web.CategoryListServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CategoryDelete</servlet-name>
+    <servlet-class>sforums.web.CategoryDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CategoryGet</servlet-name>
+    <servlet-class>sforums.web.CategoryGetServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CategorySave</servlet-name>
+    <servlet-class>sforums.web.CategorySaveServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CategoryForm</servlet-name>
+    <jsp-file>/categoryForm.jsp</jsp-file>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CategoryList</servlet-name>
+    <url-pattern>/categories.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CategoryDelete</servlet-name>
+    <url-pattern>/category_delete.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CategoryGet</servlet-name>
+    <url-pattern>/category.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CategoryGet</servlet-name>
+    <url-pattern>/category_edit.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CategorySave</servlet-name>
+    <url-pattern>/category_save.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CategoryForm</servlet-name>
+    <url-pattern>/category_add.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UserList</servlet-name>
+    <servlet-class>sforums.web.UserListServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UserDelete</servlet-name>
+    <servlet-class>sforums.web.UserDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UserGet</servlet-name>
+    <servlet-class>sforums.web.UserGetServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UserSave</servlet-name>
+    <servlet-class>sforums.web.UserSaveServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UserForm</servlet-name>
+    <jsp-file>/userForm.jsp</jsp-file>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UserList</servlet-name>
+    <url-pattern>/users.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserDelete</servlet-name>
+    <url-pattern>/user_delete.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserGet</servlet-name>
+    <url-pattern>/user.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserGet</servlet-name>
+    <url-pattern>/user_edit.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserSave</servlet-name>
+    <url-pattern>/user_save.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserForm</servlet-name>
+    <url-pattern>/user_add.html</url-pattern>
+  </servlet-mapping>
+
+  <resource-ref>
+    <description>Database Connection Pool</description>
+    <res-ref-name>jdbc/sforums</res-ref-name>
+    <res-type>javax.jdbc.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Unshareable</res-sharing-scope>
+  </resource-ref>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Modification Actions</web-resource-name>
+      <url-pattern>/category_save.html</url-pattern>
+      <url-pattern>/category_delete.html</url-pattern>
+      <url-pattern>/category_add.html</url-pattern>
+      <url-pattern>/category_edit.html</url-pattern>
+      <url-pattern>/user_save.html</url-pattern>
+      <url-pattern>/user_delete.html</url-pattern>
+      <url-pattern>/user_add.html</url-pattern>
+      <url-pattern>/user_edit.html</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>SForums</realm-name>
+  </login-config>
+
+  <security-role>
+    <role-name>user</role-name>
+  </security-role>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+</web-app>
