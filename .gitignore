@@ -21,10 +21,7 @@
 
 # Generated code #
 ##################
-*/gen/*
-*/build/*
-*/bin/*
-*/out/*
+build
 
 # Logs and databases #
 ######################
