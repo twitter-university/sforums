@@ -7,7 +7,7 @@
 
   <context-param>
     <param-name>daoRepositoryClassName</param-name>
-    <param-value>sforums.dao.MySqlDaoRepository</param-value>
+    <param-value>sforums.dao.HibernateDaoRepository</param-value>
   </context-param>
 
   <servlet>
