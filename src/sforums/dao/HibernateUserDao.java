@@ -3,8 +3,12 @@ package sforums.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
+
 import sforums.domain.User;
 
+@Transactional(readOnly = true)
 public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
 
 	@Override
@@ -24,6 +28,7 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
 				.findAll("from User order by firstName, lastName");
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void save(User user) throws DataAccessException {
 		synchronized (user) {
@@ -34,11 +39,13 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
 		super.save(user);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void delete(User user) throws DataAccessException {
 		super.delete(user);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void deleteById(Long id) throws DataAccessException {
 		super.deleteById(User.class, id);

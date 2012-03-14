@@ -12,7 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sforums.dao.DuplicateIdException;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import sforums.domain.User;
 
 public class UserSaveServlet extends AbstractDaoAccessServlet {
@@ -89,7 +90,7 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
 						WebConstants.CURRENT_EDIT_ENTITY);
 				resp.sendRedirect(resp.encodeRedirectURL("user.html?id="
 						+ user.getId()));
-			} catch (DuplicateIdException e) {
+			} catch (DataIntegrityViolationException e) {
 				req.setAttribute("error", "Duplicate email: " + e.getMessage());
 				req.getRequestDispatcher("/userForm.jsp").forward(req, resp);
 			}

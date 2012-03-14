@@ -1,0 +1,71 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config />
+
+    <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="WEB-INF/i18n/messages" />
+        <property name="cacheSeconds" value="10" />
+    </bean>
+    
+    <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/sforums" />
+
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+			<list>
+                <value>sforums.domain.Category</value>
+                <value>sforums.domain.User</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL5InnoDBDialect
+                </prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.provider_class">
+                    org.hibernate.cache.EhCacheProvider
+                </prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">
+                    /ehcache.xml
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="txManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="daoRepository" class="sforums.dao.DefaultDaoRepository">
+        <property name="categoryDao">
+            <bean class="sforums.dao.HibernateCategoryDao">
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </property>
+        <property name="userDao">
+            <bean class="sforums.dao.HibernateUserDao">
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </property>
+    </bean>
+</beans>

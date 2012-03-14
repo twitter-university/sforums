@@ -2,6 +2,8 @@ package sforums.dao;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import sforums.domain.User;
 
 public interface UserDao {

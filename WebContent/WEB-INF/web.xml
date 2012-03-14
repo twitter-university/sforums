@@ -5,10 +5,24 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>sforums</display-name>
 
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
   <context-param>
-    <param-name>daoRepositoryClassName</param-name>
-    <param-value>sforums.dao.HibernateDaoRepository</param-value>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
+
+  <filter>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <url-pattern>*.html</url-pattern>
+  </filter-mapping>
 
   <servlet>
     <servlet-name>CategoryList</servlet-name>
