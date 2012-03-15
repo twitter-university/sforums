@@ -3,6 +3,8 @@ package sforums.web;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,9 +41,15 @@ public class CategoryFormController {
 			@ModelAttribute("category") @Valid Category category,
 			BindingResult result, SessionStatus status) {
 		if (!result.hasErrors()) {
-			this.dao.save(category);
-			status.setComplete();
-			return "redirect:category.html?id=" + category.getId();
+			try {
+				this.dao.save(category);
+				status.setComplete();
+				return "redirect:category.html?id=" + category.getId();
+			} catch (DataIntegrityViolationException e) {
+				result.rejectValue("name", "DuplicateNameFailure");
+			} catch (ConcurrencyFailureException e) {
+				result.reject("ConcurrentModificatonFailure");
+			}
 		}
 		return "categoryForm";
 	}

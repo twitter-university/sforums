@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -15,6 +16,15 @@
     <h1>Category Form</h1>
     <form:form commandName="category">
       <table>
+		<spring:hasBindErrors name="category">
+          <tr>
+            <th></th>
+            <td class="error">
+              Form Errors<br/>
+              <form:errors/>
+            </td>
+          </tr>
+        </spring:hasBindErrors>
         <c:if test="${category.idSet}">
           <tr>
             <th>ID:</th>

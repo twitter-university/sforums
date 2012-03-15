@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import sforums.domain.IdentifiableEntity;
@@ -16,9 +17,14 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity>
 			.getGenericSuperclass()).getActualTypeArguments()[0];
 
 	protected void save(E entity) throws DataAccessException {
-		super.getHibernateTemplate().saveOrUpdate(entity);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Stored: " + entity);
+		try {
+			super.getHibernateTemplate().saveOrUpdate(entity);
+			super.getHibernateTemplate().flush();
+			if (logger.isDebugEnabled()) {
+				logger.debug("Stored: " + entity);
+			}
+		} catch (HibernateOptimisticLockingFailureException e) {
+
 		}
 	}
 
@@ -28,7 +34,7 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity>
 			logger.debug("Deleted: " + entity);
 		}
 	}
-	
+
 	public void deleteById(Long id) throws DataAccessException {
 		super.getHibernateTemplate().delete(
 				super.getHibernateTemplate().load(this.domainClass, id));

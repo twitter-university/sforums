@@ -16,6 +16,15 @@
     <h1>User Form</h1>
     <form:form commandName="userAndPassword">
       <table>
+        <spring:hasBindErrors name="userAndPassword">
+          <tr>
+            <th></th>
+            <td class="error">
+              Form Errors<br/>
+              <form:errors/>
+            </td>
+          </tr>
+        </spring:hasBindErrors>
         <c:if test="${userAndPassword.user.idSet}">
           <tr>
             <th>ID:</th>
