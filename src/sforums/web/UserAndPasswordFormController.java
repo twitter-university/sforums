@@ -1,5 +1,7 @@
 package sforums.web;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -36,7 +38,7 @@ public class UserAndPasswordFormController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(
-			@ModelAttribute("userAndPassword") UserAndPassword userAndPassword,
+			@ModelAttribute("userAndPassword") @Valid UserAndPassword userAndPassword,
 			BindingResult result, SessionStatus status) {
 		if (!result.hasErrors()) {
 			User user = userAndPassword.getUser();

@@ -2,6 +2,9 @@ package sforums.web;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import sforums.Util;
 import sforums.domain.User;
 
@@ -19,6 +22,8 @@ public class UserAndPassword implements Serializable {
 		this.user = user;
 	}
 
+	@Valid
+	@NotNull
 	public User getUser() {
 		return this.user;
 	}

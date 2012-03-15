@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "category")
@@ -19,6 +22,9 @@ public class Category extends IdentifiableEntity {
 
 	private String description;
 
+	@Size(max = 64)
+	@NotEmpty
+	@NotNull
 	@Column(length = 64, nullable = false, unique = true)
 	public String getName() {
 		return this.name;

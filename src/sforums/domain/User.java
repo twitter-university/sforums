@@ -8,9 +8,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user")
@@ -33,6 +38,7 @@ public class User extends IdentifiableEntity {
 
 	private Date created;
 
+	@Size(max = 64)
 	@Column(length = 64)
 	public String getTitle() {
 		return this.title;
@@ -42,6 +48,9 @@ public class User extends IdentifiableEntity {
 		this.title = title;
 	}
 
+	@Size(max = 20)
+	@NotEmpty
+	@NotNull
 	@Column(length = 20, nullable = false)
 	public String getFirstName() {
 		return this.firstName;
@@ -51,6 +60,9 @@ public class User extends IdentifiableEntity {
 		this.firstName = firstName;
 	}
 
+	@Size(max = 20)
+	@NotEmpty
+	@NotNull
 	@Column(length = 20, nullable = false)
 	public String getLastName() {
 		return this.lastName;
@@ -60,6 +72,10 @@ public class User extends IdentifiableEntity {
 		this.lastName = lastName;
 	}
 
+	@Email
+	@Size(max = 64)
+	@NotEmpty
+	@NotNull
 	@Column(length = 64, nullable = false, unique = true)
 	public String getEmail() {
 		return this.email;
@@ -78,6 +94,7 @@ public class User extends IdentifiableEntity {
 		this.passwordDigest = passwordDigest;
 	}
 
+	@Size(max = 64)
 	@Column(length = 64)
 	public String getOrganization() {
 		return this.organization;
@@ -87,6 +104,7 @@ public class User extends IdentifiableEntity {
 		this.organization = organization;
 	}
 
+	@Past
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreated() {
