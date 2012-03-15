@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import sforums.Util;
 import sforums.domain.User;
 
+@PasswordRequiredForNewUsers
+@VerifiedPassword
 public class UserAndPassword implements Serializable {
 
 	private static final long serialVersionUID = -955350814749881282L;
