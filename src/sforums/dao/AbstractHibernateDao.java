@@ -1,56 +1,64 @@
 package sforums.dao;
 
-import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public abstract class AbstractHibernateDao extends HibernateDaoSupport {
+import sforums.domain.IdentifiableEntity;
 
-	protected void save(Object entity) throws DataAccessException {
+public abstract class AbstractHibernateDao<E extends IdentifiableEntity>
+		extends HibernateDaoSupport {
+
+	@SuppressWarnings("unchecked")
+	private Class<E> domainClass = (Class<E>) ((ParameterizedType) getClass()
+			.getGenericSuperclass()).getActualTypeArguments()[0];
+
+	protected void save(E entity) throws DataAccessException {
 		super.getHibernateTemplate().saveOrUpdate(entity);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Stored: " + entity);
 		}
 	}
 
-	protected void delete(Object entity) throws DataAccessException {
+	protected void delete(E entity) throws DataAccessException {
 		super.getHibernateTemplate().delete(entity);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Deleted: " + entity);
 		}
 	}
-
-	protected void deleteById(Class<?> clazz, Serializable id)
-			throws DataAccessException {
+	
+	public void deleteById(Long id) throws DataAccessException {
 		super.getHibernateTemplate().delete(
-				super.getHibernateTemplate().load(clazz, id));
+				super.getHibernateTemplate().load(this.domainClass, id));
 		if (logger.isDebugEnabled()) {
 			logger.debug("Deleted by id: " + id);
 		}
 	}
 
-	protected Object getById(Class<?> clazz, Serializable id)
-			throws DataAccessException {
-		Object result = super.getHibernateTemplate().get(clazz, id);
+	@SuppressWarnings("unchecked")
+	public E getById(Long id) throws DataAccessException {
+		Object result = super.getHibernateTemplate().get(this.domainClass, id);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Got " + result + " by id " + id);
 		}
-		return result;
+		return (E) result;
 	}
 
-	protected List<?> findAll(String hqlQuery, Object... params)
+	@SuppressWarnings("unchecked")
+	protected List<E> findAll(String hqlQuery, Object... params)
 			throws DataAccessException {
 		List<?> result = super.getHibernateTemplate().find(hqlQuery, params);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Found " + result.size() + " entities by query: "
 					+ hqlQuery);
 		}
-		return result;
+		return (List<E>) result;
 	}
 
-	protected Object findOne(String hqlQuery, Object... params)
+	@SuppressWarnings("unchecked")
+	protected E findOne(String hqlQuery, Object... params)
 			throws DataAccessException {
 		List<?> results = super.getHibernateTemplate().find(hqlQuery, params);
 		if (results == null || results.isEmpty()) {
@@ -60,7 +68,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Found " + result + " by query: " + hqlQuery);
 			}
-			return result;
+			return (E) result;
 		} else {
 			throw new IllegalArgumentException(
 					"More than one result returned by query: " + hqlQuery);

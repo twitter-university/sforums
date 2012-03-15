@@ -9,23 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import sforums.domain.User;
 
 @Transactional(readOnly = true)
-public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
-
-	@Override
-	public User getById(Long id) throws DataAccessException {
-		return (User) super.getById(User.class, id);
-	}
+public class HibernateUserDao extends AbstractHibernateDao<User> implements
+		UserDao {
 
 	@Override
 	public User getByEmail(String email) throws DataAccessException {
-		return (User) super.findOne("from User where email=?", email);
+		return super.findOne("from User where email=?", email);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAll() throws DataAccessException {
-		return (List<User>) super
-				.findAll("from User order by firstName, lastName");
+		return super.findAll("from User order by firstName, lastName");
 	}
 
 	@Transactional(readOnly = false)
@@ -48,6 +42,6 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
 	@Transactional(readOnly = false)
 	@Override
 	public void deleteById(Long id) throws DataAccessException {
-		super.deleteById(User.class, id);
+		super.deleteById(id);
 	}
 }
