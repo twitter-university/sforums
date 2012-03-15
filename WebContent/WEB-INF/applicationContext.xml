@@ -64,7 +64,4 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="daoRepository" class="sforums.dao.DefaultDaoRepository"
-		p:categoryDao-ref="categoryDao" p:userDao-ref="userDao" />
-
 </beans>

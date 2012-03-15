@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -12,34 +13,35 @@
   <body>
     <jsp:include page="navBar.jsp"/>
     <h1>Category Form</h1>
-    <form method="post" action="<c:url value='/category_save.html'/>">
+    <form:form commandName="category">
       <table>
-        <c:if test="${not empty error}">
+        <c:if test="${category.idSet}">
           <tr>
-            <th>Error:</th>
-            <td class="error">${error}</td>
+            <th>ID:</th>
+            <td>${category.id}</td>
           </tr>
         </c:if>
         <tr>
-          <th>Name *:</th>
+          <th><form:label path="name">Name</form:label> *:</th>
           <td>
-            <input type="text" name="name" value="${category.name}"/>
+            <form:input path="name" />
+            <form:errors path="name" cssClass="error"/>
           </td>
         </tr>
         <tr>
-          <th>Description:</th>
+          <th><form:label path="description">Description</form:label>:</th>
           <td>
-            <textarea name="description" rows="5" cols="60">${category.description}</textarea>
+            <form:textarea path="description" cols="80" rows="8" />
+            <form:errors path="description" cssClass="error"/>
           </td>
         </tr>
         <tr>
           <th>&nbsp;</th>
           <td>
-            <input type="hidden" name="id" value="${category.id}"/>
             <input type="submit" value="Save"/>
           </td>
         </tr>
       </table>
-    </form>
+    </form:form>
   </body>
 </html>
