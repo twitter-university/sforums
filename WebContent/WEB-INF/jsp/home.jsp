@@ -12,6 +12,5 @@
       This is a very trivial Servlet/JDBC-based implementation that 
       demonstrates CRUD for future forum categories.
     </p>
-    <p>foo = ${foo}</p>
   </body>
 </html>

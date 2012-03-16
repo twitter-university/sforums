@@ -20,6 +20,10 @@
 		<property name="alwaysUseFullPath" value="true" />
 	</bean>
 
+    <mvc:interceptors>
+        <bean class="sforums.web.UserContextInterceptor" />
+    </mvc:interceptors>
+
 	<bean id="exceptionResolver"
         class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -33,9 +34,11 @@
                 <td>${f:trimToLength(category.description, 40)}</td>
                 <td class="small">
                   <a class="button" href="<c:url value='/category.html?id=${category.id}'/>">View</a>
-                  <a class="button" href="<c:url value='/category_form.html?id=${category.id}'/>">Edit</a>
-                  <a class="button" href="<c:url value='/category_delete.html?id=${category.id}'/>"
-                    onclick="return confirm('Are you sure you wish to delete this category?');">Delete</a>
+                  <security:authorize ifAllGranted="ROLE_ADMIN">
+	                <a class="button" href="<c:url value='/category_form.html?id=${category.id}'/>">Edit</a>
+	                <a class="button" href="<c:url value='/category_delete.html?id=${category.id}'/>"
+	                  onclick="return confirm('Are you sure you wish to delete this category?');">Delete</a>
+                  </security:authorize>
                 </td>
               </tr>
             </c:forEach>
