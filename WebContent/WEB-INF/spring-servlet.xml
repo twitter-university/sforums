@@ -40,6 +40,10 @@
 
 	<mvc:view-controller path="/home.html" view-name="home" />
 
+    <mvc:view-controller path="/login.html" view-name="login" />
+
+    <mvc:view-controller path="/access_denied.html" view-name="accessDenied" />
+
 	<bean name="/categories.html" class="sforums.web.IdentifiableEntityListController"
 		p:viewName="categoryList" p:dao-ref="categoryDao" />
 

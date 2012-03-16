@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import sforums.Util;
 import sforums.dao.UserDao;
 import sforums.domain.User;
+import sforums.service.UserStoreService;
 
 @Controller
 @RequestMapping("/user_form.html")
@@ -25,9 +25,13 @@ import sforums.domain.User;
 public class UserAndPasswordFormController {
 	private final UserDao dao;
 
+	private final UserStoreService userStoreService;
+
 	@Autowired
-	public UserAndPasswordFormController(UserDao dao) {
+	public UserAndPasswordFormController(UserDao dao,
+			UserStoreService userStoreService) {
 		this.dao = dao;
+		this.userStoreService = userStoreService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -45,11 +49,9 @@ public class UserAndPasswordFormController {
 		if (!result.hasErrors()) {
 			try {
 				User user = userAndPassword.getUser();
-				if (userAndPassword.isPasswordVerified()) {
-					user.setPasswordDigest(Util.md5Digest(userAndPassword
-							.getPassword()));
-				}
-				this.dao.save(user);
+				String password = userAndPassword.isPasswordVerified() ? userAndPassword
+						.getPassword() : null;
+				this.userStoreService.store(user, password);
 				status.setComplete();
 				return "redirect:user.html?id=" + user.getId();
 			} catch (DataIntegrityViolationException e) {

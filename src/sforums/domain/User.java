@@ -38,6 +38,10 @@ public class User extends IdentifiableEntity {
 
 	private Date created;
 
+	private boolean admin = false;
+
+	private boolean enabled = true;
+
 	@Size(max = 64)
 	@Column(length = 64)
 	public String getTitle() {
@@ -113,6 +117,24 @@ public class User extends IdentifiableEntity {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	@Column(nullable = false)
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	@Column(nullable = false)
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

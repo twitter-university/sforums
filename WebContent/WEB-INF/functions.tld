@@ -39,4 +39,12 @@
     </function-signature>
   </function>
 
+  <function>
+    <name>getType</name>
+    <function-class>sforums.web.JSPFunctions</function-class>
+    <function-signature>
+      java.lang.String getType(java.lang.Object)
+    </function-signature>
+  </function>
+
 </taglib>

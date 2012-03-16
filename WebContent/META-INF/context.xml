@@ -2,10 +2,4 @@
 <!DOCTYPE Context [ ]>
 <Context>
   <ResourceLink name="jdbc/sforums" global="jdbc/sforums"/>
-
-  <!-- For simplicity sake, we are hard coding everyone to be in 'user' role -->
-  <Realm className="org.apache.catalina.realm.DataSourceRealm"
-    dataSourceName="jdbc/sforums" userTable="user" userNameCol="email"
-    userCredCol="passwordDigest" userRoleTable="user"
-    roleNameCol="&quot;user&quot;" digest="MD5" />
 </Context>

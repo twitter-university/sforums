@@ -63,5 +63,7 @@
 	<bean id="userDao" class="sforums.dao.HibernateUserDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="userStoreService" class="sforums.service.DefaultUserStoreService" />
 
 </beans>

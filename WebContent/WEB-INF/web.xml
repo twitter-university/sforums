@@ -11,7 +11,10 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/applicationContext.xml</param-value>
+    <param-value>
+    	/WEB-INF/applicationContext.xml
+    	/WEB-INF/applicationContext-security.xml
+    </param-value>
   </context-param>
 
   <filter>
@@ -22,6 +25,16 @@
   <filter-mapping>
     <filter-name>OpenSessionInViewFilter</filter-name>
     <url-pattern>*.html</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <servlet>
@@ -42,28 +55,6 @@
     <res-auth>Container</res-auth>
     <res-sharing-scope>Unshareable</res-sharing-scope>
   </resource-ref>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Modification Actions</web-resource-name>
-      <url-pattern>/category_form.html</url-pattern>
-      <url-pattern>/category_delete.html</url-pattern>
-      <url-pattern>/user_form.html</url-pattern>
-      <url-pattern>/user_delete.html</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>user</role-name>
-    </auth-constraint>
-  </security-constraint>
-
-  <login-config>
-    <auth-method>BASIC</auth-method>
-    <realm-name>SForums</realm-name>
-  </login-config>
-
-  <security-role>
-    <role-name>user</role-name>
-  </security-role>
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
