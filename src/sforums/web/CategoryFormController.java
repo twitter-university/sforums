@@ -7,6 +7,8 @@ import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +29,11 @@ public class CategoryFormController {
 	@Autowired
 	public CategoryFormController(CategoryDao dao) {
 		this.dao = dao;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setAllowedFields("name", "description");
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

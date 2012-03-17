@@ -1,6 +1,7 @@
 package sforums.web;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,5 +57,9 @@ public class JSPFunctions {
 
 	public static String getType(Object o) {
 		return o == null ? null : o.getClass().getName();
+	}
+
+	public static Date now() {
+		return new Date();
 	}
 }

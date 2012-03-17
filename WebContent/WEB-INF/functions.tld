@@ -47,4 +47,11 @@
     </function-signature>
   </function>
 
+  <function>
+    <name>now</name>
+    <function-class>sforums.web.JSPFunctions</function-class>
+    <function-signature>
+      java.util.Date now()
+    </function-signature>
+  </function>
 </taglib>

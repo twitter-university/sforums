@@ -39,20 +39,22 @@
           </tr>
         </c:if>
         <spring:nestedPath path="user">
-          <tr>
-            <th><form:label path="firstName">First Name</form:label> *:</th>
-            <td>
-              <form:input path="firstName" />
-              <form:errors path="firstName" cssClass="error"/>
-            </td>
-          </tr>
-          <tr>
-            <th><form:label path="lastName">Last Name</form:label> *:</th>
-            <td>
-              <form:input path="lastName" />
-              <form:errors path="lastName" cssClass="error"/>
-            </td>
-          </tr>
+          <spring:nestedPath path="name">
+	        <tr>
+	          <th><form:label path="first">First Name</form:label> *:</th>
+	          <td>
+	            <form:input path="first" />
+	            <form:errors path="first" cssClass="error"/>
+	          </td>
+	        </tr>
+	        <tr>
+	          <th><form:label path="last">Last Name</form:label> *:</th>
+	          <td>
+	            <form:input path="last" />
+	            <form:errors path="last" cssClass="error"/>
+	          </td>
+	        </tr>
+          </spring:nestedPath>
           <tr>
             <th><form:label path="organization">Organization</form:label>:</th>
             <td>

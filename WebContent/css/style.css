@@ -42,3 +42,54 @@ a.button:hover, form input[type="submit"]:hover {
 	padding-bottom: 7px;
 	border-bottom: 1px solid black;
 }
+
+h1 {
+    margin: 5px 0px;
+}
+
+.breadcrumbs,
+.breadcrumbs a {
+    font-size: small;
+    color: #666;
+}
+.breadcrumbs:before {
+    content: "\00bb ";
+}
+
+div.post {
+    margin-top: 10px;
+    border-color: #333;
+}
+.post,
+.post .header,
+.post .message {
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+.post .header {
+    position: relative;
+    margin-bottom: 5px;
+}
+.post .header .author {
+    float: left;
+    width: 50%;
+}
+.post .header .date {
+    float: right;
+    width: 50%;
+}
+.post .header .actions {
+    display: none;
+    font-size: small;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+}
+.post .header:hover .actions {
+    display: block;
+}
+form .post textarea {
+    margin: 3px 0;
+    padding: 5px;
+    width: 98.5%;
+}

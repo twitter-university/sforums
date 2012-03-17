@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class Util {
 
@@ -80,5 +81,64 @@ public class Util {
 			}
 		}
 		return out.toString();
+	}
+
+	/**
+	 * Check if two objects are equal
+	 * 
+	 * @param o1
+	 *            the first object
+	 * @param o2
+	 *            the second object
+	 * @return true if o1 and o2 are both null or are equal
+	 */
+	public static boolean equal(Object o1, Object o2) {
+		return o1 == null ? o2 == null : o1.equals(o2);
+	}
+
+	/**
+	 * Get the hash code of an object
+	 * 
+	 * @param r
+	 *            initial result
+	 * @param o
+	 *            the object
+	 * @return result plus the hash code of the object or just result if object
+	 *         is null
+	 */
+	public static int hashCode(int r, Object o) {
+		return o == null ? r : r + 31 * o.hashCode();
+	}
+
+	/**
+	 * Get var args as an array.
+	 * 
+	 * @param ts
+	 *            the var args
+	 * @return return ts
+	 */
+	public static <T> T[] array(T... ts) {
+		return ts;
+	}
+
+	/**
+	 * Get the unique element in a list.
+	 * 
+	 * @param list
+	 *            the list
+	 * @return the first element of the list or null if the list is null or
+	 *         empty
+	 * @throws IllegalArgumentException
+	 *             if the list has more than one element
+	 */
+	public static <T> T uniqueResult(List<T> list) {
+		if (list == null || list.isEmpty()) {
+			return null;
+		} else if (list.size() == 1) {
+			return list.get(0);
+		} else {
+			throw new IllegalArgumentException(
+					"Expecting only a single element in list: " + list);
+		}
 	}
 }

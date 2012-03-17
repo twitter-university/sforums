@@ -1,6 +1,5 @@
 package sforums.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -25,11 +24,7 @@ public class HibernateUserDao extends AbstractHibernateDao<User> implements
 	@Transactional(readOnly = false)
 	@Override
 	public void save(User user) throws DataAccessException {
-		synchronized (user) {
-			if (!user.isIdSet()) {
-				user.setCreated(new Date());
-			}
-		}
+		user.markCreated();
 		super.save(user);
 	}
 

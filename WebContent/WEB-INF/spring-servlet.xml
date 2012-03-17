@@ -65,4 +65,22 @@
 
 	<bean name="/user_delete.html" class="sforums.web.IdentifiableEntityDeleteController"
 		p:viewName="redirect:categories.html" p:dao-ref="userDao" />
+		
+    <bean name="/forums.html" class="sforums.web.IdentifiableEntityListController"
+        p:dao-ref="forumDao" p:viewName="forumList" />
+
+    <bean name="/forum.html" class="sforums.web.IdentifiableEntityGetController"
+        p:dao-ref="forumDao" p:viewName="forumView" />
+
+    <bean name="/forum_delete.html" class="sforums.web.IdentifiableEntityDeleteController"
+        p:dao-ref="forumDao" p:viewName="redirect:forums.html" />
+
+    <bean name="/topic.html" class="sforums.web.IdentifiableEntityGetController"
+        p:dao-ref="topicDao" p:viewName="topicView" />
+
+    <bean name="/topic_delete.html" class="sforums.web.IdentifiableEntityDeleteController"
+        p:dao-ref="topicDao" p:viewName="redirect:forums.html" />
+
+    <bean name="/reply_delete.html" class="sforums.web.IdentifiableEntityDeleteController"
+        p:dao-ref="replyDao" p:viewName="redirect:forums.html" />
 </beans>

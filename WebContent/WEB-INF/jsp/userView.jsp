@@ -17,11 +17,11 @@
     <table class="nameValuePairs">
       <tr>
         <th>First Name:</th>
-        <td>${user.firstName}</td>
+        <td>${user.name.first}</td>
       </tr>
       <tr>
         <th>Last Name:</th>
-        <td>${user.lastName}</td>
+        <td>${user.name.last}</td>
       </tr>
       <tr>
         <th>Organization:</th>

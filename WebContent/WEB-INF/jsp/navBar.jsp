@@ -13,6 +13,10 @@
   </security:authorize>
   <a class="button" href="<c:url value='/categories.html'/>">List Categories</a>
   <security:authorize ifAllGranted="ROLE_ADMIN">
+    <a class="button" href="<c:url value='/forum_form.html'/>">Add Forum</a>
+  </security:authorize>
+  <a class="button" href="<c:url value='/forums.html'/>">List Forums</a>
+  <security:authorize ifAllGranted="ROLE_ADMIN">
     <a class="button" href="<c:url value='/user_form.html'/>">Add User</a>
   </security:authorize>
   <a class="button" href="<c:url value='/users.html'/>">List Users</a>

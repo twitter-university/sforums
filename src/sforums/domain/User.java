@@ -1,15 +1,18 @@
 package sforums.domain;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -20,13 +23,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class User extends IdentifiableEntity {
+public class User extends TimestampedEntity {
 
 	private static final long serialVersionUID = 2993569267760500809L;
 
-	private String firstName;
-
-	private String lastName;
+	private Name name = new Name();
 
 	private String organization;
 
@@ -36,11 +37,11 @@ public class User extends IdentifiableEntity {
 
 	private String passwordDigest;
 
-	private Date created;
-
 	private boolean admin = false;
 
 	private boolean enabled = true;
+
+	private List<Post> posts = new ArrayList<Post>();
 
 	@Size(max = 64)
 	@Column(length = 64)
@@ -52,28 +53,15 @@ public class User extends IdentifiableEntity {
 		this.title = title;
 	}
 
-	@Size(max = 20)
-	@NotEmpty
 	@NotNull
-	@Column(length = 20, nullable = false)
-	public String getFirstName() {
-		return this.firstName;
+	@Valid
+	@Embedded
+	public Name getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	@Size(max = 20)
-	@NotEmpty
-	@NotNull
-	@Column(length = 20, nullable = false)
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(Name name) {
+		this.name = name;
 	}
 
 	@Email
@@ -108,17 +96,6 @@ public class User extends IdentifiableEntity {
 		this.organization = organization;
 	}
 
-	@Past
-	@Column(nullable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getCreated() {
-		return this.created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
 	@Column(nullable = false)
 	public boolean isAdmin() {
 		return admin;
@@ -135,6 +112,16 @@ public class User extends IdentifiableEntity {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	@OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@OrderBy("created")
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
@@ -157,13 +144,8 @@ public class User extends IdentifiableEntity {
 				: 17 * this.getEmail().hashCode();
 	}
 
-	@Transient
-	public String getName() {
-		return this.getFirstName() + " " + this.getLastName();
-	}
-
 	@Override
 	public String toString() {
-		return this.getName();
+		return String.valueOf(this.getName());
 	}
 }

@@ -36,5 +36,33 @@
         timeToIdleSeconds="300"
         timeToLiveSeconds="600"
         overflowToDisk="true"/>
+        
+	<cache name="sforums.domain.Forum"
+        maxElementsInMemory="50"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+
+    <cache name="sforums.domain.Post"
+        maxElementsInMemory="200"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+
+    <cache name="sforums.domain.Topic"
+        maxElementsInMemory="200"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+
+    <cache name="sforums.domain.Reply"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
 
 </ehcache>

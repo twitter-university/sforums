@@ -26,6 +26,10 @@
 			<list>
 				<value>sforums.domain.Category</value>
 				<value>sforums.domain.User</value>
+                <value>sforums.domain.Forum</value>
+                <value>sforums.domain.Post</value>
+                <value>sforums.domain.Topic</value>
+                <value>sforums.domain.Reply</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -63,6 +67,18 @@
 	<bean id="userDao" class="sforums.dao.HibernateUserDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+    <bean id="forumDao" class="sforums.dao.HibernateForumDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="topicDao" class="sforums.dao.HibernateTopicDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="replyDao" class="sforums.dao.HibernateReplyDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 	
 	<bean id="userStoreService" class="sforums.service.DefaultUserStoreService" />
     <bean id="userContextService" class="sforums.service.DefaultUserContextService"/>
