@@ -14,6 +14,15 @@ import sforums.domain.Forum;
 @Transactional(readOnly = true)
 public class HibernateForumDao extends AbstractHibernateDao<Forum> implements
 		ForumDao {
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Forum getById(Long id) throws DataAccessException {
+		return (Forum) uniqueResult(super.getHibernateTemplate()
+				.findByNamedQueryAndNamedParam("forum-by-id-fetch-all", "id",
+						id));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getByCategoryAndName(Category category, String name)

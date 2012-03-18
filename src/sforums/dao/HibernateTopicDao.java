@@ -13,39 +13,47 @@ import sforums.domain.Topic;
 
 @Transactional(readOnly = true)
 public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements
-        TopicDao {
+		TopicDao {
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Topic getByForumAndTitle(Forum forum, String title)
-            throws DataAccessException {
-        return (Topic) uniqueResult(super.getHibernateTemplate()
-                .findByNamedQueryAndNamedParam("topic-by-forum-and-title",
-                        array("forum", "title"), array(forum, title)));
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public Topic getById(Long id) throws DataAccessException {
+		return (Topic) uniqueResult(super.getHibernateTemplate()
+				.findByNamedQueryAndNamedParam("topic-by-id-fetch-all", "id",
+						id));
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Topic> getAll() throws DataAccessException {
-        return super.getHibernateTemplate().findByNamedQuery("all-topics");
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public Topic getByForumAndTitle(Forum forum, String title)
+			throws DataAccessException {
+		return (Topic) uniqueResult(super.getHibernateTemplate()
+				.findByNamedQueryAndNamedParam("topic-by-forum-and-title",
+						array("forum", "title"), array(forum, title)));
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void save(Topic topic) throws DataAccessException {
-        topic.markCreated();
-        super.save(topic);
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Topic> getAll() throws DataAccessException {
+		return super.getHibernateTemplate().findByNamedQuery("all-topics");
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void delete(Topic Topic) throws DataAccessException {
-        super.delete(Topic);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void save(Topic topic) throws DataAccessException {
+		topic.markCreated();
+		super.save(topic);
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void deleteById(Long id) throws DataAccessException {
-        super.deleteById(id);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void delete(Topic Topic) throws DataAccessException {
+		super.delete(Topic);
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public void deleteById(Long id) throws DataAccessException {
+		super.deleteById(id);
+	}
 }

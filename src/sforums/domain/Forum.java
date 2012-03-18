@@ -33,6 +33,7 @@ import sforums.Util;
 		"name", "category_id" }) })
 @NamedQueries({
 		@NamedQuery(name = "all-forums", query = "from Forum order by category.name, name", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
+		@NamedQuery(name = "forum-by-id-fetch-all", query = "select distinct f from Forum as f inner join fetch f.category left join fetch f.topics as t inner join fetch t.author where f.id=:id", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
 		@NamedQuery(name = "forum-by-category-and-name", query = "from Forum where category=:category and name=:name") })
 @BatchSize(size = 10)
 public class Forum extends IdentifiableEntity {

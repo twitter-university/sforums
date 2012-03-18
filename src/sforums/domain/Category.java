@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -53,6 +55,7 @@ public class Category extends IdentifiableEntity {
 	}
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OrderBy("name")
 	public List<Forum> getForums() {
 		return forums;
