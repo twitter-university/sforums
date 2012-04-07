@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import sforums.domain.User;
@@ -13,10 +13,10 @@ public class DefaultUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1187218242956480188L;
 
-	private static final GrantedAuthority USER = new GrantedAuthorityImpl(
+	private static final GrantedAuthority USER = new SimpleGrantedAuthority(
 			"ROLE_USER");
 
-	private static final GrantedAuthority ADMIN = new GrantedAuthorityImpl(
+	private static final GrantedAuthority ADMIN = new SimpleGrantedAuthority(
 			"ROLE_ADMIN");
 
 	private final User user;
