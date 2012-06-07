@@ -1,8 +1,8 @@
-== About SForums
+== About This Repository
 
-SForums is an online forum web application intended to be hosted on Tomcat and MySQL.
+This is a repository of a Java Eclipse project called SForums.
 
-This project was created to support learning about Spring and Hibernate frameworks.
+SForums is an online forum web application created to support learning about Spring and Hibernate frameworks in Marakana training classes.
 
 == Requirements
 

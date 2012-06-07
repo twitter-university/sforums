@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 @MappedSuperclass
 public abstract class IdentifiableEntity implements Serializable {
@@ -20,6 +23,7 @@ public abstract class IdentifiableEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@XmlTransient
 	public Long getId() {
 		return this.id;
 	}
@@ -33,12 +37,24 @@ public abstract class IdentifiableEntity implements Serializable {
 		return this.id != null;
 	}
 
+	@Transient
+	@XmlElement(name = "id")
+	@XmlID
+	public String getIdAsString() {
+		return String.valueOf(this.id);
+	}
+
+	public void setIdAsString(String id) {
+		this.id = Long.parseLong(id);
+	}
+
 	@Version
+	@XmlElement
 	public int getVersion() {
 		return version;
 	}
 
-	void setVersion(int version) {
+	public void setVersion(int version) {
 		this.version = version;
 	}
 

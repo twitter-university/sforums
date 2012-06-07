@@ -63,7 +63,5 @@
 
 	<beans:bean id="userDetailsService" class="sforums.security.DefaultUserDetailsService" />
 
-	<beans:bean id="passwordEncoder"
-		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
 
 </beans:beans>

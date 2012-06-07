@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -34,6 +37,7 @@ import sforums.Util;
 		@NamedQuery(name = "topic-by-forum-and-title", query = "from Topic where forum=:forum and title=:title"),
 		@NamedQuery(name = "topic-by-id-fetch-all", query = "select distinct t from Topic as t inner join fetch t.author inner join fetch t.forum f inner join fetch f.category left join fetch t.replies r inner join fetch r.author where t.id=:id", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }) })
 @BatchSize(size = 10)
+@XmlRootElement(name = "topic")
 public class Topic extends Post {
 
 	private static final long serialVersionUID = -8501774350808842862L;
@@ -44,6 +48,7 @@ public class Topic extends Post {
 
 	@NotNull
 	@ManyToOne(optional = false)
+	@XmlIDREF
 	public Forum getForum() {
 		return forum;
 	}
@@ -66,6 +71,7 @@ public class Topic extends Post {
 
 	@OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@OrderBy
+	@XmlTransient
 	public List<Reply> getReplies() {
 		return replies;
 	}

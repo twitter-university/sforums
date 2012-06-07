@@ -8,6 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlIDREF;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -36,6 +37,7 @@ public class Post extends TimestampedEntity {
 
 	@NotNull
 	@ManyToOne(optional = false)
+	@XmlIDREF
 	public User getAuthor() {
 		return author;
 	}

@@ -13,6 +13,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,6 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "category")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@XmlRootElement(name = "category")
 public class Category extends IdentifiableEntity {
 
 	private static final long serialVersionUID = 124961586053250629L;
@@ -57,6 +60,7 @@ public class Category extends IdentifiableEntity {
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OrderBy("name")
+	@XmlTransient
 	public List<Forum> getForums() {
 		return forums;
 	}

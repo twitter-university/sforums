@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,6 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@XmlRootElement(name = "user")
 public class User extends TimestampedEntity {
 
 	private static final long serialVersionUID = 2993569267760500809L;
@@ -55,7 +58,7 @@ public class User extends TimestampedEntity {
 
 	@NotNull
 	@Valid
-	@Embedded
+	@Embedded	
 	public Name getName() {
 		return name;
 	}
@@ -78,6 +81,7 @@ public class User extends TimestampedEntity {
 	}
 
 	@Column(length = 32, nullable = false)
+	@XmlTransient
 	public String getPasswordDigest() {
 		return this.passwordDigest;
 	}
@@ -116,6 +120,7 @@ public class User extends TimestampedEntity {
 
 	@OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@OrderBy("created")
+	@XmlTransient
 	public List<Post> getPosts() {
 		return posts;
 	}

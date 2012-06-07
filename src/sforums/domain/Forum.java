@@ -19,6 +19,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -36,6 +39,7 @@ import sforums.Util;
 		@NamedQuery(name = "forum-by-id-fetch-all", query = "select distinct f from Forum as f inner join fetch f.category left join fetch f.topics as t left join fetch t.author where f.id=:id", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
 		@NamedQuery(name = "forum-by-category-and-name", query = "from Forum where category=:category and name=:name") })
 @BatchSize(size = 10)
+@XmlRootElement(name = "forum")
 public class Forum extends IdentifiableEntity {
 
 	private static final long serialVersionUID = 8322524543528154627L;
@@ -46,6 +50,7 @@ public class Forum extends IdentifiableEntity {
 
 	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@XmlIDREF
 	public Category getCategory() {
 		return category;
 	}
@@ -77,6 +82,7 @@ public class Forum extends IdentifiableEntity {
 
 	@OneToMany(mappedBy = "forum", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@OrderBy
+	@XmlTransient
 	public List<Topic> getTopics() {
 		return topics;
 	}
@@ -91,6 +97,7 @@ public class Forum extends IdentifiableEntity {
 	}
 
 	@Transient
+	@XmlTransient
 	public String getFullName() {
 		return this.getCategory().getName() + " - " + this.getName();
 	}

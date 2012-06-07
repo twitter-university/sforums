@@ -6,10 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Embeddable
+@XmlRootElement(name = "name")
 public class Name implements Serializable {
 
 	private static final long serialVersionUID = -6645706242888900930L;
