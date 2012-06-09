@@ -17,9 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -27,6 +27,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import sforums.Util;
+import sforums.web.rest.ForumXmlAdapter;
 
 @Entity
 @Table(name = "topic", uniqueConstraints = { @UniqueConstraint(columnNames = {
@@ -48,7 +49,7 @@ public class Topic extends Post {
 
 	@NotNull
 	@ManyToOne(optional = false)
-	@XmlIDREF
+	@XmlJavaTypeAdapter(value = ForumXmlAdapter.class)
 	public Forum getForum() {
 		return forum;
 	}

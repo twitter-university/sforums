@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import sforums.domain.Forum;
 import sforums.domain.Topic;
 
-@Transactional(readOnly = true)
 public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements
 		TopicDao {
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Topic getById(Long id) throws DataAccessException {
@@ -23,6 +23,7 @@ public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements
 						id));
 	}
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Topic getByForumAndTitle(Forum forum, String title)
@@ -32,6 +33,7 @@ public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements
 						array("forum", "title"), array(forum, title)));
 	}
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Topic> getAll() throws DataAccessException {
@@ -43,17 +45,5 @@ public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements
 	public void save(Topic topic) throws DataAccessException {
 		topic.markCreated();
 		super.save(topic);
-	}
-
-	@Transactional(readOnly = false)
-	@Override
-	public void delete(Topic Topic) throws DataAccessException {
-		super.delete(Topic);
-	}
-
-	@Transactional(readOnly = false)
-	@Override
-	public void deleteById(Long id) throws DataAccessException {
-		super.deleteById(id);
 	}
 }

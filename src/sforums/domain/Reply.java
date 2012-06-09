@@ -4,12 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import sforums.web.rest.TopicXmlAdapter;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -23,7 +25,7 @@ public class Reply extends Post {
 
 	@NotNull
 	@ManyToOne(optional = false)
-	@XmlIDREF
+	@XmlJavaTypeAdapter(value = TopicXmlAdapter.class)
 	public Topic getTopic() {
 		return topic;
 	}

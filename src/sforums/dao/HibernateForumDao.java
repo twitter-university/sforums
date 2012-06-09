@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import sforums.domain.Category;
 import sforums.domain.Forum;
 
-@Transactional(readOnly = true)
 public class HibernateForumDao extends AbstractHibernateDao<Forum> implements
 		ForumDao {
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getById(Long id) throws DataAccessException {
@@ -23,6 +23,7 @@ public class HibernateForumDao extends AbstractHibernateDao<Forum> implements
 						id));
 	}
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getByCategoryAndName(Category category, String name)
@@ -32,27 +33,10 @@ public class HibernateForumDao extends AbstractHibernateDao<Forum> implements
 						array("category", "name"), array(category, name)));
 	}
 
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Forum> getAll() throws DataAccessException {
 		return super.getHibernateTemplate().findByNamedQuery("all-forums");
-	}
-
-	@Transactional(readOnly = false)
-	@Override
-	public void save(Forum forum) throws DataAccessException {
-		super.save(forum);
-	}
-
-	@Transactional(readOnly = false)
-	@Override
-	public void delete(Forum forum) throws DataAccessException {
-		super.delete(forum);
-	}
-
-	@Transactional(readOnly = false)
-	@Override
-	public void deleteById(Long id) throws DataAccessException {
-		super.deleteById(id);
 	}
 }

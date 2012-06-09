@@ -28,6 +28,11 @@
 		<intercept-url pattern="^/login.html.*$"
 			requires-channel="https" method="POST" />
 
+		<intercept-url pattern="^/api_v1_0_0/(categories|forums|users)/?$" method="POST" access="ROLE_ADMIN" />
+		<intercept-url pattern="^/api_v1_0_0/(categories|forums|topics|replies|users)/[0-9]+$" method="PUT" access="ROLE_ADMIN" />
+		<intercept-url pattern="^/api_v1_0_0/(categories|forums|topics|replies|users)/[0-9]+$" method="DELETE" access="ROLE_ADMIN" />
+        <intercept-url pattern="^/api_v1_0_0/(topics|replies)/?$" method="POST" access="ROLE_USER" />
+
 		<intercept-url pattern="^/.+\.html.*$" requires-channel="http" />
 
 		<form-login login-processing-url="/security_check.html"

@@ -8,9 +8,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import sforums.web.rest.UserXmlAdapter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -37,7 +39,7 @@ public class Post extends TimestampedEntity {
 
 	@NotNull
 	@ManyToOne(optional = false)
-	@XmlIDREF
+	@XmlJavaTypeAdapter(value = UserXmlAdapter.class)
 	public User getAuthor() {
 		return author;
 	}

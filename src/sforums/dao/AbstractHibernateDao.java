@@ -4,8 +4,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.orm.hibernate3.HibernateObjectRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import sforums.domain.IdentifiableEntity;
 
@@ -16,7 +20,8 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity>
 	private Class<E> domainClass = (Class<E>) ((ParameterizedType) getClass()
 			.getGenericSuperclass()).getActualTypeArguments()[0];
 
-	protected void save(E entity) throws DataAccessException {
+	@Transactional(readOnly = false)
+	public void save(E entity) throws DataAccessException {
 		try {
 			super.getHibernateTemplate().saveOrUpdate(entity);
 			super.getHibernateTemplate().flush();
@@ -24,22 +29,30 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity>
 				logger.debug("Stored: " + entity);
 			}
 		} catch (HibernateOptimisticLockingFailureException e) {
-
+			throw new OptimisticLockingFailureException("Failed to save ["
+					+ entity + "] due to an optimistic locking failure", e);
 		}
 	}
 
-	protected void delete(E entity) throws DataAccessException {
+	@Transactional(readOnly = false)
+	public void delete(E entity) throws DataAccessException {
 		super.getHibernateTemplate().delete(entity);
 		if (logger.isDebugEnabled()) {
 			logger.debug("Deleted: " + entity);
 		}
 	}
 
+	@Transactional(readOnly = false)
 	public void deleteById(Long id) throws DataAccessException {
-		super.getHibernateTemplate().delete(
-				super.getHibernateTemplate().load(this.domainClass, id));
-		if (logger.isDebugEnabled()) {
-			logger.debug("Deleted by id: " + id);
+		try {
+			super.getHibernateTemplate().delete(
+					super.getHibernateTemplate().load(this.domainClass, id));
+			if (logger.isDebugEnabled()) {
+				logger.debug("Deleted by id: " + id);
+			}
+		} catch (HibernateObjectRetrievalFailureException e) {
+			throw new DataRetrievalFailureException(
+					"No entity by id to delete: " + id, e);
 		}
 	}
 

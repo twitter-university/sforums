@@ -19,9 +19,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -29,6 +30,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import sforums.Util;
+import sforums.web.rest.CategoryXmlAdapter;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -40,6 +42,7 @@ import sforums.Util;
 		@NamedQuery(name = "forum-by-category-and-name", query = "from Forum where category=:category and name=:name") })
 @BatchSize(size = 10)
 @XmlRootElement(name = "forum")
+@XmlType(propOrder = { "category", "name", "description" })
 public class Forum extends IdentifiableEntity {
 
 	private static final long serialVersionUID = 8322524543528154627L;
@@ -50,7 +53,7 @@ public class Forum extends IdentifiableEntity {
 
 	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@XmlIDREF
+	@XmlJavaTypeAdapter(value = CategoryXmlAdapter.class)
 	public Category getCategory() {
 		return category;
 	}
