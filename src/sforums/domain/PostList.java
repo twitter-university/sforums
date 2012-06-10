@@ -2,7 +2,7 @@ package sforums.domain;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
@@ -18,7 +18,7 @@ public class PostList extends IdentifiableEntityList<Post> {
 	}
 
 	@Override
-	@XmlElement(name = "post")
+	@XmlElementRef
 	public List<Post> getList() {
 		return super.getList();
 	}
