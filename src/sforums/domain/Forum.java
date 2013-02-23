@@ -91,7 +91,7 @@ public class Forum extends IdentifiableEntity {
 	}
 
 	@OneToMany(mappedBy = "forum", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	@OrderBy
+	@OrderBy("title")
 	@XmlTransient
 	@JsonIgnore
 	public List<Topic> getTopics() {

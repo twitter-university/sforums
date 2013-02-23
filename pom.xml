@@ -183,11 +183,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>${hibernate.jpa-version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache-version}</version>
@@ -196,11 +191,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>${javassist-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -329,9 +319,8 @@
 		<junit-version>4.10</junit-version>
 		<slf4j-version>1.7.2</slf4j-version>
 		<log4j-version>1.2.17</log4j-version>
-		<hibernate-version>3.6.10.Final</hibernate-version>
-		<hibernate.jpa-version>1.0.1.Final</hibernate.jpa-version>
-		<hibernate.validator-version>4.2.0.Final</hibernate.validator-version>
+		<hibernate-version>4.1.10.Final</hibernate-version>
+		<hibernate.validator-version>4.3.1.Final</hibernate.validator-version>
 		<ehcache-version>2.6.5</ehcache-version>
 		<javassist-version>3.12.1.GA</javassist-version>
 		<spring.framework-version>3.2.1.RELEASE</spring.framework-version>

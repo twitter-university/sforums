@@ -78,7 +78,7 @@ public class Topic extends Post {
 	}
 
 	@OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	@OrderBy
+	@OrderBy("created")
 	@XmlTransient
 	@JsonIgnore
 	public List<Reply> getReplies() {

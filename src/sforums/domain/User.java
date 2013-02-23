@@ -19,8 +19,12 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -58,7 +62,7 @@ public class User extends TimestampedEntity {
 
 	@NotNull
 	@Valid
-	@Embedded	
+	@Embedded
 	public Name getName() {
 		return name;
 	}
@@ -82,6 +86,7 @@ public class User extends TimestampedEntity {
 
 	@Column(length = 32, nullable = false)
 	@XmlTransient
+	@JsonIgnore
 	public String getPasswordDigest() {
 		return this.passwordDigest;
 	}
@@ -119,8 +124,10 @@ public class User extends TimestampedEntity {
 	}
 
 	@OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OrderBy("created")
 	@XmlTransient
+	@JsonIgnore
 	public List<Post> getPosts() {
 		return posts;
 	}
