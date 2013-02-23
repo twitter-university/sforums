@@ -19,6 +19,11 @@ public class IdentifiableEntityGetController extends
 		if (super.logger.isDebugEnabled()) {
 			super.logger.debug("Got [" + result + "] by id [" + id + "]");
 		}
-		return new ModelAndView(super.getViewName()).addObject(result);
+		if (result == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		} else {
+			return new ModelAndView(super.getViewName()).addObject(result);
+		}
 	}
 }

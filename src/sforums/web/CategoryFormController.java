@@ -33,7 +33,7 @@ public class CategoryFormController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setAllowedFields("name", "description");
+		binder.setAllowedFields(new String[] { "name", "description" });
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

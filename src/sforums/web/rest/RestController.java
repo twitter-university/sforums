@@ -28,17 +28,11 @@ import sforums.dao.ReplyDao;
 import sforums.dao.TopicDao;
 import sforums.dao.UserDao;
 import sforums.domain.Category;
-import sforums.domain.CategoryList;
 import sforums.domain.Forum;
-import sforums.domain.ForumList;
 import sforums.domain.IdentifiableEntity;
-import sforums.domain.PostList;
 import sforums.domain.Reply;
-import sforums.domain.ReplyList;
 import sforums.domain.Topic;
-import sforums.domain.TopicList;
 import sforums.domain.User;
-import sforums.domain.UserList;
 
 @Controller
 @RequestMapping("/api_v1_0_0")
@@ -62,14 +56,14 @@ public class RestController {
 		this.userDao = userDao;
 	}
 
-	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public @ResponseBody
 	CategoryList getAllCategories() {
 		logger.debug("Getting all categories");
 		return new CategoryList(this.categoryDao.getAll());
 	}
 
-	@RequestMapping(value = "/categories/{id}", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/categories/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Category getCategoryById(@PathVariable("id") long id) {
 		logger.debug("Getting category by id: " + id);
@@ -83,7 +77,7 @@ public class RestController {
 		this.categoryDao.deleteById(id);
 	}
 
-	@RequestMapping(value = "/categories", method = RequestMethod.POST, consumes = "application/xml", produces = "application/xml")
+	@RequestMapping(value = "/categories", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	Category createCategory(@Valid @RequestBody Category category) {
@@ -92,7 +86,7 @@ public class RestController {
 		return category;
 	}
 
-	@RequestMapping(value = "/categories/{id}", method = RequestMethod.PUT, consumes = "application/xml")
+	@RequestMapping(value = "/categories/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateCategory(@Valid @RequestBody Category category,
 			@PathVariable("id") long id) {
@@ -100,7 +94,7 @@ public class RestController {
 		this.categoryDao.save(verifyId(category, id));
 	}
 
-	@RequestMapping(value = "/categories/{id}/forums", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/categories/{id}/forums", method = RequestMethod.GET)
 	public @ResponseBody
 	ForumList getAllForumsForCategory(@PathVariable("id") long id) {
 		logger.debug("Getting all forums for category " + id);
@@ -108,21 +102,21 @@ public class RestController {
 				.getForums());
 	}
 
-	@RequestMapping(value = "/forums", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/forums", method = RequestMethod.GET)
 	public @ResponseBody
 	ForumList getAllForums() {
 		logger.debug("Getting all forums");
 		return new ForumList(this.forumDao.getAll());
 	}
 
-	@RequestMapping(value = "/forums/{id}", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/forums/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Forum getForumById(@PathVariable("id") long id) {
 		logger.debug("Getting forum by " + id);
 		return checkNull(this.forumDao.getById(id));
 	}
 
-	@RequestMapping(value = "/forums", method = RequestMethod.POST, consumes = "application/xml", produces = "application/xml")
+	@RequestMapping(value = "/forums", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	Forum createForum(@Valid @RequestBody Forum forum) {
@@ -131,7 +125,7 @@ public class RestController {
 		return forum;
 	}
 
-	@RequestMapping(value = "/forums/{id}", method = RequestMethod.PUT, consumes = "application/xml")
+	@RequestMapping(value = "/forums/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateForum(@Valid @RequestBody Forum forum,
 			@PathVariable("id") long id) {
@@ -146,28 +140,28 @@ public class RestController {
 		this.forumDao.deleteById(id);
 	}
 
-	@RequestMapping(value = "/forums/{id}/topics", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/forums/{id}/topics", method = RequestMethod.GET)
 	public @ResponseBody
 	TopicList getTopicsForForum(@PathVariable("id") long id) {
 		logger.debug("Getting topics for forum by " + id);
 		return new TopicList(checkNull(this.forumDao.getById(id)).getTopics());
 	}
 
-	@RequestMapping(value = "/topics", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/topics", method = RequestMethod.GET)
 	public @ResponseBody
 	TopicList getTopics() {
 		logger.debug("Getting topics");
 		return new TopicList(this.topicDao.getAll());
 	}
 
-	@RequestMapping(value = "/topics/{id}", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/topics/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Topic getTopicById(@PathVariable("id") long id) {
 		logger.debug("Getting topic by " + id);
 		return checkNull(this.topicDao.getById(id));
 	}
 
-	@RequestMapping(value = "/topics", method = RequestMethod.POST, consumes = "application/xml", produces = "application/xml")
+	@RequestMapping(value = "/topics", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	Topic createTopic(@Valid @RequestBody Topic topic) {
@@ -176,7 +170,7 @@ public class RestController {
 		return topic;
 	}
 
-	@RequestMapping(value = "/topics/{id}", method = RequestMethod.PUT, consumes = "application/xml")
+	@RequestMapping(value = "/topics/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateTopic(@Valid @RequestBody Topic topic,
 			@PathVariable("id") long id) {
@@ -191,21 +185,21 @@ public class RestController {
 		this.topicDao.deleteById(id);
 	}
 
-	@RequestMapping(value = "/topics/{id}/replies", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/topics/{id}/replies", method = RequestMethod.GET)
 	public @ResponseBody
 	ReplyList getRepliesForTopic(@PathVariable("id") long id) {
 		logger.debug("Getting replies for topic by " + id);
 		return new ReplyList(checkNull(this.topicDao.getById(id)).getReplies());
 	}
 
-	@RequestMapping(value = "/replies/{id}", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/replies/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Reply getReplyById(@PathVariable("id") long id) {
 		logger.debug("Getting reply by " + id);
 		return checkNull(this.replyDao.getById(id));
 	}
 
-	@RequestMapping(value = "/replies", method = RequestMethod.POST, consumes = "application/xml", produces = "application/xml")
+	@RequestMapping(value = "/replies", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	Reply createReply(@Valid @RequestBody Reply reply) {
@@ -214,7 +208,7 @@ public class RestController {
 		return reply;
 	}
 
-	@RequestMapping(value = "/replies/{id}", method = RequestMethod.PUT, consumes = "application/xml")
+	@RequestMapping(value = "/replies/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateReply(@Valid @RequestBody Reply reply,
 			@PathVariable("id") long id) {
@@ -229,21 +223,21 @@ public class RestController {
 		this.replyDao.deleteById(id);
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public @ResponseBody
 	UserList getAllUsers() {
 		logger.debug("Getting all users");
 		return new UserList(this.userDao.getAll());
 	}
 
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	User getUserById(@PathVariable("id") long id) {
 		logger.debug("Getting user by " + id);
 		return checkNull(this.userDao.getById(id));
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.POST, consumes = "application/xml", produces = "application/xml")
+	@RequestMapping(value = "/users", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	User createUsery(@Valid @RequestBody User user) {
@@ -252,7 +246,7 @@ public class RestController {
 		return user;
 	}
 
-	@RequestMapping(value = "/users/{id}", method = RequestMethod.PUT, consumes = "application/xml")
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateUser(@Valid @RequestBody User user,
 			@PathVariable("id") long id) {
@@ -267,7 +261,7 @@ public class RestController {
 		this.userDao.deleteById(id);
 	}
 
-	@RequestMapping(value = "/users/{id}/posts", method = RequestMethod.GET, produces = "application/xml")
+	@RequestMapping(value = "/users/{id}/posts", method = RequestMethod.GET)
 	public @ResponseBody
 	PostList getTopicsForUser(@PathVariable("id") long id) {
 		logger.debug("Getting posts for user by id " + id);

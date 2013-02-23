@@ -26,8 +26,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import sforums.Util;
+import sforums.web.json.ForumJsonDeserializer;
+import sforums.web.json.IdentifiableEntityJsonSerializer;
 import sforums.web.rest.ForumXmlAdapter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "topic", uniqueConstraints = { @UniqueConstraint(columnNames = {
@@ -36,7 +41,7 @@ import sforums.web.rest.ForumXmlAdapter;
 @NamedQueries({
 		@NamedQuery(name = "all-topics", query = "from Topic order by created", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }),
 		@NamedQuery(name = "topic-by-forum-and-title", query = "from Topic where forum=:forum and title=:title"),
-		@NamedQuery(name = "topic-by-id-fetch-all", query = "select distinct t from Topic as t inner join fetch t.author inner join fetch t.forum f inner join fetch f.category left join fetch t.replies r inner join fetch r.author where t.id=:id", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }) })
+		@NamedQuery(name = "topic-by-id-fetch-all", query = "select distinct t from Topic as t inner join fetch t.author inner join fetch t.forum f inner join fetch f.category left join fetch t.replies r left join fetch r.author where t.id=:id", hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true") }) })
 @BatchSize(size = 10)
 @XmlRootElement(name = "topic")
 public class Topic extends Post {
@@ -50,10 +55,12 @@ public class Topic extends Post {
 	@NotNull
 	@ManyToOne(optional = false)
 	@XmlJavaTypeAdapter(value = ForumXmlAdapter.class)
+	@JsonSerialize(using = IdentifiableEntityJsonSerializer.class)
 	public Forum getForum() {
 		return forum;
 	}
 
+	@JsonDeserialize(using = ForumJsonDeserializer.class)
 	public void setForum(Forum forum) {
 		this.forum = forum;
 	}
@@ -73,6 +80,7 @@ public class Topic extends Post {
 	@OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@OrderBy
 	@XmlTransient
+	@JsonIgnore
 	public List<Reply> getReplies() {
 		return replies;
 	}
@@ -83,19 +91,32 @@ public class Topic extends Post {
 
 	@Override
 	public int hashCode() {
-		return Util.hashCode(Util.hashCode(17, getTitle()), getForum());
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((forum == null) ? 0 : forum.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		} else if (obj instanceof Topic) {
-			Topic that = (Topic) obj;
-			return Util.equal(this.getTitle(), that.getTitle())
-					&& Util.equal(this.getForum(), that.getForum());
-		} else {
+		if (!super.equals(obj))
 			return false;
-		}
+		if (!(obj instanceof Topic))
+			return false;
+		Topic other = (Topic) obj;
+		if (forum == null) {
+			if (other.forum != null)
+				return false;
+		} else if (!forum.equals(other.forum))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
 	}
 }

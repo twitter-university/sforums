@@ -1,8 +1,10 @@
-package sforums.domain;
+package sforums.web.rest;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
+
+import sforums.domain.IdentifiableEntity;
 
 public abstract class IdentifiableEntityList<E extends IdentifiableEntity> {
 	private List<E> list;

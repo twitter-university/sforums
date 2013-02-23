@@ -1,11 +1,16 @@
-package sforums.domain;
+package sforums.web.rest;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import sforums.domain.Forum;
+
 @XmlRootElement(name = "forums")
+@JsonRootName("forums")
 public class ForumList extends IdentifiableEntityList<Forum> {
 
 	public ForumList() {

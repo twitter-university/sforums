@@ -19,5 +19,4 @@ public class IdentifiableEntityDeleteController extends
 		}
 		return new ModelAndView(super.getViewName());
 	}
-
 }

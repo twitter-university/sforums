@@ -1,8 +1,5 @@
 package sforums.dao;
 
-import static sforums.Util.array;
-import static sforums.Util.uniqueResult;
-
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -15,28 +12,24 @@ public class HibernateForumDao extends AbstractHibernateDao<Forum> implements
 		ForumDao {
 
 	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getById(Long id) throws DataAccessException {
-		return (Forum) uniqueResult(super.getHibernateTemplate()
-				.findByNamedQueryAndNamedParam("forum-by-id-fetch-all", "id",
-						id));
+		return super.findOne(super.getSession()
+				.getNamedQuery("forum-by-id-fetch-all").setLong("id", id));
 	}
 
 	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getByCategoryAndName(Category category, String name)
 			throws DataAccessException {
-		return (Forum) uniqueResult(super.getHibernateTemplate()
-				.findByNamedQueryAndNamedParam("forum-by-category-and-name",
-						array("category", "name"), array(category, name)));
+		return super.findOne(super.getSession()
+				.getNamedQuery("forum-by-category-and-name")
+				.setParameter("category", category).setParameter("name", name));
 	}
 
 	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Forum> getAll() throws DataAccessException {
-		return super.getHibernateTemplate().findByNamedQuery("all-forums");
+		return super.findAll(super.getSession().getNamedQuery("all-forums"));
 	}
 }

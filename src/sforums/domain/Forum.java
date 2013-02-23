@@ -29,8 +29,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import sforums.Util;
+import sforums.web.json.CategoryJsonDeserializer;
+import sforums.web.json.IdentifiableEntityJsonSerializer;
 import sforums.web.rest.CategoryXmlAdapter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -54,10 +59,12 @@ public class Forum extends IdentifiableEntity {
 	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@XmlJavaTypeAdapter(value = CategoryXmlAdapter.class)
+	@JsonSerialize(using = IdentifiableEntityJsonSerializer.class)
 	public Category getCategory() {
 		return category;
 	}
 
+	@JsonDeserialize(using = CategoryJsonDeserializer.class)
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -86,6 +93,7 @@ public class Forum extends IdentifiableEntity {
 	@OneToMany(mappedBy = "forum", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@OrderBy
 	@XmlTransient
+	@JsonIgnore
 	public List<Topic> getTopics() {
 		return topics;
 	}
@@ -94,27 +102,42 @@ public class Forum extends IdentifiableEntity {
 		this.topics = topics;
 	}
 
-	@Override
-	public int hashCode() {
-		return Util.hashCode(Util.hashCode(17, getName()), getCategory());
-	}
-
 	@Transient
 	@XmlTransient
+	@JsonIgnore
 	public String getFullName() {
 		return this.getCategory().getName() + " - " + this.getName();
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		} else if (obj instanceof Forum) {
-			Forum that = (Forum) obj;
-			return Util.equal(this.getCategory(), that.getCategory())
-					&& Util.equal(this.getName(), that.getName());
-		} else {
+		if (!super.equals(obj))
 			return false;
-		}
+		if (!(obj instanceof Forum))
+			return false;
+		Forum other = (Forum) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 }

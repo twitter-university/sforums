@@ -1,7 +1,7 @@
 package sforums.security;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +12,8 @@ import sforums.dao.UserDao;
 import sforums.domain.User;
 
 public class DefaultUserDetailsService implements UserDetailsService {
-	private static final Log logger = LogFactory
-			.getLog(DefaultUserDetailsService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(DefaultUserDetailsService.class);
 
 	private final UserDao dao;
 

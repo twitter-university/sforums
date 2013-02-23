@@ -1,7 +1,7 @@
 package sforums.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +10,8 @@ import sforums.dao.UserDao;
 import sforums.domain.User;
 
 public class DefaultUserStoreService implements UserStoreService {
-	private final Log logger = LogFactory.getLog(this.getClass());
+	private static final Logger logger = LoggerFactory
+			.getLogger(DefaultUserStoreService.class);
 	private final UserDao dao;
 	private final PasswordEncoder passwordEncoder;
 

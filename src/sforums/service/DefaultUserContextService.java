@@ -1,7 +1,7 @@
 package sforums.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -12,8 +12,8 @@ import sforums.security.DefaultUserDetails;
 
 public class DefaultUserContextService implements UserContextService {
 
-	private static final Log logger = LogFactory
-			.getLog(DefaultUserContextService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(DefaultUserContextService.class);
 
 	public User getUserFromContext() {
 		SecurityContext ctx = SecurityContextHolder.getContext();

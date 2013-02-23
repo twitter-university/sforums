@@ -10,6 +10,8 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
 public abstract class IdentifiableEntity implements Serializable {
 
@@ -30,6 +32,7 @@ public abstract class IdentifiableEntity implements Serializable {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	@Transient
 	public boolean isIdSet() {
 		return this.id != null;

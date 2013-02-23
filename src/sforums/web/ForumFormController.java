@@ -28,58 +28,59 @@ import sforums.domain.Forum;
 @RequestMapping("/forum_form.html")
 @SessionAttributes("forum")
 public class ForumFormController {
-    private final ForumDao forumDao;
-    private final CategoryDao categoryDao;
+	private final ForumDao forumDao;
+	private final CategoryDao categoryDao;
 
-    @Autowired
-    public ForumFormController(ForumDao forumDao, CategoryDao categoryDao) {
-        this.forumDao = forumDao;
-        this.categoryDao = categoryDao;
-    }
+	@Autowired
+	public ForumFormController(ForumDao forumDao, CategoryDao categoryDao) {
+		this.forumDao = forumDao;
+		this.categoryDao = categoryDao;
+	}
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Category.class,
-                new IdentifiableEntityEditor(this.categoryDao));
-        binder.setAllowedFields("category", "name", "description");
-    }
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Category.class,
+				new IdentifiableEntityEditor(this.categoryDao));
+		binder.setAllowedFields(new String[] { "category", "name",
+				"description" });
+	}
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView setupForm(
-            @RequestParam(value = "id", required = false) Long id,
-            @RequestParam(value = "categoryId", required = false) Long categoryId) {
-        Forum forum;
-        if (id == null) {
-            forum = new Forum();
-            if (categoryId != null) {
-                forum.setCategory(this.categoryDao.getById(categoryId));
-            }
-        } else {
-            forum = this.forumDao.getById(id);
-        }
-        return new ModelAndView("forumForm").addObject(forum);
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(
+			@RequestParam(value = "id", required = false) Long id,
+			@RequestParam(value = "categoryId", required = false) Long categoryId) {
+		Forum forum;
+		if (id == null) {
+			forum = new Forum();
+			if (categoryId != null) {
+				forum.setCategory(this.categoryDao.getById(categoryId));
+			}
+		} else {
+			forum = this.forumDao.getById(id);
+		}
+		return new ModelAndView("forumForm").addObject(forum);
+	}
 
-    @ModelAttribute("categoryList")
-    public List<Category> addCategoryListToModel() {
-        return this.categoryDao.getAll();
-    }
+	@ModelAttribute("categoryList")
+	public List<Category> addCategoryListToModel() {
+		return this.categoryDao.getAll();
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String processSubmit(@ModelAttribute("forum") @Valid Forum forum,
-            BindingResult result, SessionStatus status) {
-        if (!result.hasErrors()) {
-            try {
-                this.forumDao.save(forum);
-                status.setComplete();
-                return "redirect:forum.html?id=" + forum.getId();
-            } catch (DataIntegrityViolationException e) {
-                result.rejectValue("name", "DuplicateNameFailure");
-            } catch (ConcurrencyFailureException e) {
-                result.reject("ConcurrentModificatonFailure",
-                        new String[] { "forum" }, null);
-            }
-        }
-        return "forumForm";
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	public String processSubmit(@ModelAttribute("forum") @Valid Forum forum,
+			BindingResult result, SessionStatus status) {
+		if (!result.hasErrors()) {
+			try {
+				this.forumDao.save(forum);
+				status.setComplete();
+				return "redirect:forum.html?id=" + forum.getId();
+			} catch (DataIntegrityViolationException e) {
+				result.rejectValue("name", "DuplicateNameFailure");
+			} catch (ConcurrencyFailureException e) {
+				result.reject("ConcurrentModificatonFailure",
+						new String[] { "forum" }, null);
+			}
+		}
+		return "forumForm";
+	}
 }

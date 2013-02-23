@@ -23,6 +23,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "category")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -63,6 +65,7 @@ public class Category extends IdentifiableEntity {
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OrderBy("name")
 	@XmlTransient
+	@JsonIgnore
 	public List<Forum> getForums() {
 		return forums;
 	}

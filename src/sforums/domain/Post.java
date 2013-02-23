@@ -12,7 +12,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import sforums.web.json.IdentifiableEntityJsonSerializer;
+import sforums.web.json.UserJsonDeserializer;
 import sforums.web.rest.UserXmlAdapter;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -40,10 +45,12 @@ public class Post extends TimestampedEntity {
 	@NotNull
 	@ManyToOne(optional = false)
 	@XmlJavaTypeAdapter(value = UserXmlAdapter.class)
+	@JsonSerialize(using = IdentifiableEntityJsonSerializer.class)
 	public User getAuthor() {
 		return author;
 	}
 
+	@JsonDeserialize(using = UserJsonDeserializer.class)
 	public void setAuthor(User author) {
 		this.author = author;
 	}

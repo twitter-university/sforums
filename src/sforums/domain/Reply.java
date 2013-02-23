@@ -11,7 +11,12 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import sforums.web.json.IdentifiableEntityJsonSerializer;
+import sforums.web.json.TopicJsonDeserializer;
 import sforums.web.rest.TopicXmlAdapter;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -26,10 +31,12 @@ public class Reply extends Post {
 	@NotNull
 	@ManyToOne(optional = false)
 	@XmlJavaTypeAdapter(value = TopicXmlAdapter.class)
+	@JsonSerialize(using = IdentifiableEntityJsonSerializer.class)
 	public Topic getTopic() {
 		return topic;
 	}
 
+	@JsonDeserialize(using = TopicJsonDeserializer.class)
 	public void setTopic(Topic topic) {
 		this.topic = topic;
 	}

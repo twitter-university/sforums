@@ -50,9 +50,9 @@ public class UserAndPasswordProfileFormController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setAllowedFields("user.email", "user.name.*",
+		binder.setAllowedFields(new String[] { "user.email", "user.name.*",
 				"user.organization", "user.title", "password",
-				"passwordVerification");
+				"passwordVerification" });
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

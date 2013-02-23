@@ -45,7 +45,7 @@ public class TopicFormController {
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Forum.class, new IdentifiableEntityEditor(
 				this.forumDao));
-		binder.setAllowedFields("forum", "title", "message");
+		binder.setAllowedFields(new String[] { "forum", "title", "message" });
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

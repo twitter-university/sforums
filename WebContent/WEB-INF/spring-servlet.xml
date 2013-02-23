@@ -20,11 +20,11 @@
 				<value>sforums.domain.Topic</value>
 				<value>sforums.domain.Reply</value>
 				<value>sforums.domain.User</value>
-				<value>sforums.domain.CategoryList</value>
-				<value>sforums.domain.ForumList</value>
-				<value>sforums.domain.TopicList</value>
-				<value>sforums.domain.ReplyList</value>
-				<value>sforums.domain.UserList</value>
+				<value>sforums.web.rest.CategoryList</value>
+				<value>sforums.web.rest.ForumList</value>
+				<value>sforums.web.rest.TopicList</value>
+				<value>sforums.web.rest.ReplyList</value>
+				<value>sforums.web.rest.UserList</value>
 			</list>
 		</property>
 		<property name="adapters">
@@ -40,7 +40,7 @@
 		<property name="unmarshaller" ref="jaxb2Marshaller" />
 	</bean>
 
-	<context:component-scan base-package="sforums.web" />
+	<context:component-scan base-package="sforums.web,sforums.web.rest" />
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>
@@ -48,6 +48,17 @@
 				class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 				<property name="marshaller" ref="jaxb2Marshaller" />
 				<property name="unmarshaller" ref="jaxb2Marshaller" />
+			</bean>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="sforums.web.json.CustomObjectMapper">
+						<property name="handlerInstantiator">
+							<bean class="sforums.web.json.SpringAwareHandlerInstantiator" />
+						</property>
+						<property name="serializationInclusion" value="NON_NULL" />
+					</bean>
+				</property>
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
@@ -58,11 +69,11 @@
 		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
 		<property name="alwaysUseFullPath" value="true" />
 	</bean>
-	
+
 	<mvc:interceptors>
 		<bean class="sforums.web.UserContextInterceptor" />
 	</mvc:interceptors>
-	
+
 	<bean id="exceptionResolver"
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
@@ -72,7 +83,7 @@
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
