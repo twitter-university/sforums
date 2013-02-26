@@ -1,9 +1,9 @@
 package sforums.web.rest;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -11,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -289,34 +291,24 @@ public class RestController {
 		return e;
 	}
 
-	@ExceptionHandler(Exception.class)
-	public void handleException(Exception e, HttpServletResponse response)
+	@ExceptionHandler({ NonTransientDataAccessException.class })
+	public void handleDataError(Exception e, HttpServletResponse response)
 			throws IOException {
-		int code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-		String error = "Internal Server Error";
-		if (e instanceof ConcurrencyFailureException) {
-			code = HttpServletResponse.SC_CONFLICT;
-			error = "Concurrent modification failure";
-		} else if (e instanceof ConstraintViolationException) {
-			code = HttpServletResponse.SC_BAD_REQUEST;
-			error = "Constraint violation failure";
-		} else if (e instanceof DataIntegrityViolationException) {
-			code = HttpServletResponse.SC_CONFLICT;
-			error = "Data integrity violation failure";
-		} else if (e instanceof NoSuchResourceException) {
-			code = HttpServletResponse.SC_NOT_FOUND;
-			error = "No such resource";
-		} else if (e instanceof DataRetrievalFailureException) {
-			code = HttpServletResponse.SC_NOT_FOUND;
-			error = "No such resource";
-		} else if (e instanceof IllegalArgumentException) {
-			code = HttpServletResponse.SC_BAD_REQUEST;
-			error = "Invalid request";
-		}
-		if (logger.isWarnEnabled()) {
-			logger.warn("Encountered an exception. Sending code=" + code
-					+ ", error=" + error, e);
-		}
-		response.sendError(code, error);
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler({ DataIntegrityViolationException.class,
+			ConcurrencyFailureException.class })
+	public void handleConflict(Exception e, HttpServletResponse response)
+			throws IOException {
+		response.setStatus(HttpServletResponse.SC_CONFLICT);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public @ResponseBody
+	List<ObjectError> handleValidation(MethodArgumentNotValidException e,
+			HttpServletResponse response) throws IOException {
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		return e.getBindingResult().getAllErrors();
 	}
 }
