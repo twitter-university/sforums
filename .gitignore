@@ -23,6 +23,8 @@
 ##################
 build
 target
+retired
+samples
 
 # Logs and databases #
 ######################
