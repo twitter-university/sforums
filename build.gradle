@@ -1,0 +1,94 @@
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp' 
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    compile
+    runtime
+    all*.exclude group: 'commons-logging'
+    sourceSets.main.java.srcDirs = ['src'] 
+    sourceSets.main.resources.srcDirs = ['src'] 
+}
+
+eclipse {
+    wtp {
+        facet {
+            facet name: 'java', version: '1.7'
+            facet name: 'jst.web', version: '3.0'
+        }
+    }
+}
+
+war {
+    from 'WebContent'
+}
+
+task deployWebContent(type: Sync) {
+	from 'WebContent'
+	into "${catalinaBase}/webapps/${appName}"
+}
+
+task deployLibs(type: Sync, dependsOn: 'deployWebContent') {
+    from configurations.runtime
+    into "${catalinaBase}/webapps/${appName}/WEB-INF/lib"
+}
+
+task deployClassesAndResources(type: Sync, dependsOn: ['classes', 'deployWebContent']) {
+	from files(sourceSets.main.output.classesDir, sourceSets.main.output.resourcesDir)
+	into "${catalinaBase}/webapps/${appName}/WEB-INF/classes"
+}
+
+task deployWebApp(dependsOn: ['deployWebContent', 'deployLibs', 'deployClassesAndResources'])
+
+dependencies {
+
+    /* Logging */
+    compile 'org.slf4j:slf4j-api:1.7.2'
+    runtime 'org.slf4j:jcl-over-slf4j:1.7.2'
+    runtime 'org.slf4j:slf4j-log4j12:1.7.2'
+    runtime 'log4j:log4j:1.2.17'
+
+	/* Servlet */
+ 	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    providedCompile 'javax.servlet.jsp:jsp-api:2.2'
+    runtime 'javax.servlet:jstl:1.2'
+    runtime 'taglibs:standard:1.1.2'
+
+ 	/* EHCache */
+    runtime 'net.sf.ehcache:ehcache-core:2.6.5'
+ 
+    /* Hibernate */
+    compile 'org.hibernate:hibernate-core:4.1.10.Final'
+    compile 'org.hibernate:hibernate-validator:4.3.1.Final'
+    runtime 'org.hibernate:hibernate-ehcache:4.1.10.Final'
+
+    /* Spring */
+    compile 'org.springframework:spring-context:3.2.1.RELEASE'
+    compile 'org.springframework:spring-orm:3.2.1.RELEASE'
+    compile 'org.springframework:spring-web:3.2.1.RELEASE'
+    compile 'org.springframework:spring-webmvc:3.2.1.RELEASE'
+    compile 'org.springframework:spring-jdbc:3.2.1.RELEASE'
+    
+    /* Spring OXM */
+    compile 'org.springframework.ws:spring-oxm:1.5.9'
+    compile 'org.springframework.ws:spring-oxm-tiger:1.5.9'
+
+    /* Spring Security */
+    compile 'org.springframework.security:spring-security-core:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-config:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-web:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-taglibs:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-aspects:3.1.3.RELEASE'
+
+    /* Jackson */
+    compile 'com.fasterxml.jackson.core:jackson-core:2.0.4'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.0.4'
+
+    /* Test */
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.springframework:spring-test:3.2.1.RELEASE'   
+}
