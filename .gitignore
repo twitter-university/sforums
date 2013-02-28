@@ -25,6 +25,7 @@ build
 target
 retired
 samples
+.gradle
 
 # Logs and databases #
 ######################

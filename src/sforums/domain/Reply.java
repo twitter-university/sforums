@@ -11,9 +11,9 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import sforums.web.json.IdentifiableEntityJsonSerializer;
-import sforums.web.json.TopicJsonDeserializer;
-import sforums.web.rest.TopicXmlAdapter;
+import sforums.json.IdentifiableEntityJsonSerializer;
+import sforums.json.TopicJsonDeserializer;
+import sforums.xml.TopicXmlAdapter;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

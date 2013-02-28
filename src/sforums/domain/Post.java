@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import sforums.web.json.IdentifiableEntityJsonSerializer;
-import sforums.web.json.UserJsonDeserializer;
-import sforums.web.rest.UserXmlAdapter;
+import sforums.json.IdentifiableEntityJsonSerializer;
+import sforums.json.UserJsonDeserializer;
+import sforums.xml.UserXmlAdapter;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

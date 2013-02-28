@@ -29,9 +29,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import sforums.web.json.CategoryJsonDeserializer;
-import sforums.web.json.IdentifiableEntityJsonSerializer;
-import sforums.web.rest.CategoryXmlAdapter;
+import sforums.json.CategoryJsonDeserializer;
+import sforums.json.IdentifiableEntityJsonSerializer;
+import sforums.xml.CategoryXmlAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
