@@ -1,0 +1,16 @@
+body {
+  padding-top: 60px;
+}
+
+.number {
+  text-align: right;
+}
+
+form .required {
+    font-weight: bold;
+}
+form .required label:after {
+    color: #e32;
+    content: '*';
+    display:inline;
+}

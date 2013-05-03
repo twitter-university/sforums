@@ -1,0 +1,161 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.marakana</groupId>
+	<artifactId>sforums</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>SForums Application</name>
+	<url>http://github.com/marakana/sforums</url>
+	<description>
+	  Simple Spring and Hibernate Web Application used in Marakana Training Classes
+	</description>
+	<inceptionYear>2008</inceptionYear>
+	<organization>
+		<name>Marakana, Inc.</name>
+		<url>http://marakana.com/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>agargenta</id>
+			<name>Aleksandar Gargenta</name>
+			<email>sasa(at)marakana(dot)com</email>
+			<organization>Marakana, Inc.</organization>
+			<roles>
+				<role>Project lead</role>
+			</roles>
+			<timezone>-7</timezone>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<comments>
+			Copyright 2008-2013 the original author or authors.
+
+			Licensed under the Apache License, Version 2.0 (the "License");
+			you may not use this file except in compliance with the License.
+			You may obtain a copy of the License at
+
+			     http://www.apache.org/licenses/LICENSE-2.0
+
+			Unless required by applicable law or agreed to in writing, software
+			distributed under the License is distributed on an "AS IS" BASIS,
+			WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+			implied.
+			See the License for the specific language governing permissions and
+			limitations under the License.
+			</comments>
+		</license>
+	</licenses>
+
+	<properties>
+		<final-name>sforums</final-name>
+		<webapp-directory>../../tomcat/webapps</webapp-directory>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<compiler-plugin-version>3.0</compiler-plugin-version>
+		<war-plugin-version>2.3</war-plugin-version>
+		<assembly-plugin-version>2.4</assembly-plugin-version>
+		<jdk-version>1.7</jdk-version>
+		<servlet-version>3.0.1</servlet-version>
+		<jsp-version>2.2.1</jsp-version>
+		<jstl-version>1.2</jstl-version>
+		<standard-taglibs-version>1.1.2</standard-taglibs-version>
+		<junit-version>4.10</junit-version>
+		<slf4j-version>1.7.5</slf4j-version>
+		<logback-classic-version>1.0.7</logback-classic-version>
+	</properties>
+
+	<build>
+		<finalName>${final-name}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin-version}</version>
+				<configuration>
+					<source>${jdk-version}</source>
+					<target>${jdk-version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${war-plugin-version}</version>
+				<executions>
+					<execution>
+						<id>default-war</id>
+						<phase>none</phase>
+					</execution>
+					<execution>
+						<id>war-exploded</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<warSourceExcludes>WEB-INF/lib/**</warSourceExcludes>
+					<webappDirectory>${webapp-directory}/${final-name}</webappDirectory>
+					<useCache>true</useCache>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${jsp-version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>${standard-taglibs-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-classic-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>
