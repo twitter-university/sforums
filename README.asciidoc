@@ -1,0 +1,14 @@
+== About This Repository
+
+This is a repository of a Java Eclipse project called SForums.
+
+SForums is an online forum web application created to support http://marakana.com/training/java/spring_and_hibernate_bootcamp.html[Marakana training classes on Spring and Hibernate].
+
+== Requirements
+
+* Java 1.7.x
+* Maven 3.x
+* Tomcat 7.0.x
+* MySQL 5.x
+* MySQL Connector/J (JDBC Driver) 5.x
+
