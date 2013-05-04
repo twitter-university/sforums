@@ -8,7 +8,7 @@ function executeDelete(href, donefn, failfn) {
 }
 
 function removeElement(element) {
-	element.fadeOut(300, function() {
+	element.fadeOut(500, function() {
 		$(this).remove();
 	});
 }

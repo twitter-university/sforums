@@ -6,9 +6,14 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <tags:page title="Category Form" nav="add_category">
-  <c:if test="${not empty error}">
-    <p class="alert alert-error">${error}</p>
-  </c:if>
+  <c:choose>
+    <c:when test="${not empty error}">
+      <tags:alert type="error" title="Error!" message="${error}"/>
+    </c:when>
+    <c:when test="${success}">
+      <tags:alert type="success" title="Success!" message="Saved category."/>
+    </c:when>
+  </c:choose>
   <form method="post" action="<c:url value='/category_save.html'/>" class="form-horizontal">
     <div class="control-group required">
       <label for="name" class="control-label">Name</label>

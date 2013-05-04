@@ -33,8 +33,7 @@ public class CategorySaveServlet extends AbstractDaoAccessServlet {
             super.logger.debug("Saving {}", category);
             try {
                 super.getDaoRepository().getCategoryDao().save(category);
-                resp.sendRedirect(resp.encodeRedirectURL("category.html?id=" + category.getId()));
-                return; /* we are done! */
+                req.setAttribute("success", Boolean.TRUE);
             } catch (DuplicateIdException e) {
                 req.setAttribute("error", "Duplicate name: " + e.getMessage());
             }
