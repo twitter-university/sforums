@@ -3,6 +3,19 @@ package com.marakana.sforums.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+@Entity
+@Table(name = "user")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends IdentifiableEntity {
 
     private static final long serialVersionUID = 2993569267760500809L;
@@ -21,6 +34,7 @@ public class User extends IdentifiableEntity {
 
     private Date created;
 
+    @Column(length = 64)
     public String getTitle() {
         return this.title;
     }
@@ -29,6 +43,7 @@ public class User extends IdentifiableEntity {
         this.title = title;
     }
 
+    @Column(length = 20, nullable = false)
     public String getFirstName() {
         return this.firstName;
     }
@@ -37,6 +52,7 @@ public class User extends IdentifiableEntity {
         this.firstName = firstName;
     }
 
+    @Column(length = 20, nullable = false)
     public String getLastName() {
         return this.lastName;
     }
@@ -45,6 +61,7 @@ public class User extends IdentifiableEntity {
         this.lastName = lastName;
     }
 
+    @Column(length = 64, unique = true, nullable = false)
     public String getEmail() {
         return this.email;
     }
@@ -53,6 +70,7 @@ public class User extends IdentifiableEntity {
         this.email = email;
     }
 
+    @Column(length = 32, nullable = false)
     public String getPasswordDigest() {
         return this.passwordDigest;
     }
@@ -61,6 +79,7 @@ public class User extends IdentifiableEntity {
         this.passwordDigest = passwordDigest;
     }
 
+    @Column(length = 64)
     public String getOrganization() {
         return this.organization;
     }
@@ -69,6 +88,8 @@ public class User extends IdentifiableEntity {
         this.organization = organization;
     }
 
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreated() {
         return this.created;
     }
@@ -97,6 +118,7 @@ public class User extends IdentifiableEntity {
                 .hashCode();
     }
 
+    @Transient
     public String getName() {
         return this.getFirstName() + " " + this.getLastName();
     }

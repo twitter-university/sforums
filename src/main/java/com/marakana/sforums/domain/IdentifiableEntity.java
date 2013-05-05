@@ -1,13 +1,23 @@
+
 package com.marakana.sforums.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
+@MappedSuperclass
 public abstract class IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = 4681596106749607674L;
 
     private Long id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return this.id;
     }
@@ -16,6 +26,7 @@ public abstract class IdentifiableEntity implements Serializable {
         this.id = id;
     }
 
+    @Transient
     public boolean isIdSet() {
         return this.id != null;
     }

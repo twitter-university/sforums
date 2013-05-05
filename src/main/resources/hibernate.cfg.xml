@@ -1,0 +1,56 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="hibernate.connection.datasource">
+			java:/comp/env/jdbc/sforums
+		</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">
+			org.hibernate.dialect.MySQL5InnoDBDialect
+		</property>
+
+		<!-- Update the database schema on startup -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<!-- Log all executed SQL -->
+		<property name="hibernate.show_sql">true</property>
+
+		<!-- Format SQL when printing -->
+		<property name="hibernate.format_sql">true</property>
+
+		<!-- Send SQL comments to database server -->
+		<property name="hibernate.use_sql_comments">true</property>
+
+		<!-- Use Second-level cache -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+
+		<!-- Use Query cache -->
+		<property name="hibernate.cache.use_query_cache">true</property>
+
+		<!-- Cache provider -->
+		<property name="hibernate.cache.region.factory_class">
+			org.hibernate.cache.ehcache.EhCacheRegionFactory
+		</property>
+
+		<!-- Cache provider configuration file -->
+		<property name="hibernate.cache.provider_configuration_file_resource_path">
+			/ehcache.xml
+		</property>
+
+		<!-- Enable monitoring of our SessionFactory -->
+		<property name="hibernate.generate_statistics">true</property>
+
+		<!-- Map all of our Hibernate-managed entity classes -->
+		<mapping class="sforums.domain.Category" />
+		<mapping class="sforums.domain.User" />
+
+	</session-factory>
+</hibernate-configuration>
