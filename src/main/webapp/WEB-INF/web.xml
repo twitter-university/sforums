@@ -138,6 +138,10 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
+	<welcome-file-list>
+		<welcome-file>home.html</welcome-file>
+	</welcome-file-list>
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Modification Actions</web-resource-name>
@@ -163,9 +167,5 @@
 	<security-role>
 		<role-name>user</role-name>
 	</security-role>
-
-	<welcome-file-list>
-		<welcome-file>home.html</welcome-file>
-	</welcome-file-list>
 
 </web-app>
