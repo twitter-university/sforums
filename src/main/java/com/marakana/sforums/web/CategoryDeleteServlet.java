@@ -20,10 +20,13 @@ public class CategoryDeleteServlet extends AbstractDaoAccessServlet {
         if (id == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Specify 'id' request parameter");
         } else {
-            Category category = new Category();
-            category.setId(new Long(id));
-            super.getDaoRepository().getCategoryDao().delete(category);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            Category category = super.getDaoRepository().getCategoryDao().getById(new Long(id));
+            if (category == null) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                super.getDaoRepository().getCategoryDao().delete(category);
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
         }
     }
 }
