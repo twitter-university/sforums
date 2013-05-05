@@ -52,6 +52,7 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     }
 
     private void update(User user, Connection connection) throws SQLException {
+        // Why do we have special handling for the password? Why is this bad?
         final boolean passwordIsSet = user.getPassword() != null;
         final String sql = "UPDATE user SET firstName=?, lastName=?, organization=?, title=?, email=?"
                 + (passwordIsSet ? ", password=?" : "") + " WHERE id=?";
