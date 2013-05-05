@@ -23,7 +23,7 @@ public class CategoryDeleteServlet extends AbstractDaoAccessServlet {
             Category category = new Category();
             category.setId(new Long(id));
             super.getDaoRepository().getCategoryDao().delete(category);
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
-        resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

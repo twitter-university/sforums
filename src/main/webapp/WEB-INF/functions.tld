@@ -30,12 +30,4 @@
     </function-signature>
   </function>
 
-  <function>
-    <name>escapeXml</name>
-    <function-class>com.marakana.sforums.web.JSPFunctions</function-class>
-    <function-signature>
-      java.lang.String escapeXml(java.lang.String) 
-    </function-signature>
-  </function>
-
 </taglib>

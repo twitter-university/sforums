@@ -26,31 +26,4 @@ public class JSPFunctions {
                 length - Math.min(3, length))
                 + "...";
     }
-
-    public static String escapeXml(String in) {
-        StringBuilder out = new StringBuilder(in.length());
-        for (int i = 0; i < in.length(); i++) {
-            char ch = in.charAt(i);
-            switch (ch) {
-                case '<':
-                    out.append("&lt;");
-                    break;
-                case '>':
-                    out.append("&gt;");
-                    break;
-                case '&':
-                    out.append("&amp;");
-                    break;
-                case '"':
-                    out.append("&quot;");
-                    break;
-                case '\'':
-                    out.append("&apos;");
-                    break;
-                default:
-                    out.append(ch);
-            }
-        }
-        return out.toString();
-    }
 }
