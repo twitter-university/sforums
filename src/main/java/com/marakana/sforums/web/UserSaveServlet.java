@@ -2,12 +2,15 @@
 package com.marakana.sforums.web;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import com.marakana.sforums.dao.DuplicateIdException;
 import com.marakana.sforums.domain.User;
@@ -66,7 +69,7 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
         } else if (!password.equals(passwordVerification)) {
             errors.add("Passwords do not match.");
         } else {
-            user.setPassword(password);
+            user.setPasswordDigest(md5Digest(password));
         }
 
         if (errors.isEmpty()) {
@@ -81,5 +84,15 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
             super.logger.debug("Not saving user {}. Errors are present", user);
         }
         req.getRequestDispatcher("/WEB-INF/jsp/userForm.jsp").forward(req, resp);
+    }
+
+    private static String md5Digest(String in) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] digest = messageDigest.digest(in.getBytes());
+            return DatatypeConverter.printHexBinary(digest);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Failed to get MD5 digest", e);
+        }
     }
 }

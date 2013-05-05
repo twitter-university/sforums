@@ -138,6 +138,32 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Modification Actions</web-resource-name>
+			<url-pattern>/category_save.html</url-pattern>
+			<url-pattern>/category_delete.html</url-pattern>
+			<url-pattern>/category_add.html</url-pattern>
+			<url-pattern>/category_edit.html</url-pattern>
+			<url-pattern>/user_save.html</url-pattern>
+			<url-pattern>/user_delete.html</url-pattern>
+			<url-pattern>/user_add.html</url-pattern>
+			<url-pattern>/user_edit.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>SForums</realm-name>
+	</login-config>
+
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+
 	<welcome-file-list>
 		<welcome-file>home.html</welcome-file>
 	</welcome-file-list>

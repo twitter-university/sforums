@@ -17,7 +17,7 @@ public class User extends IdentifiableEntity {
 
     private String email;
 
-    private String password;
+    private String passwordDigest;
 
     private Date created;
 
@@ -53,12 +53,12 @@ public class User extends IdentifiableEntity {
         this.email = email;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getPasswordDigest() {
+        return this.passwordDigest;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordDigest(String passwordDigest) {
+        this.passwordDigest = passwordDigest;
     }
 
     public String getOrganization() {

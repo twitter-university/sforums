@@ -36,14 +36,14 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     private void create(User user, Connection connection) throws SQLException {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         user.setCreated(now);
-        final String sql = "INSERT INTO user (firstName, lastName, organization, title, email, password, created) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO user (firstName, lastName, organization, title, email, passwordDigest, created) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getFirstName());
             stmt.setString(2, user.getLastName());
             stmt.setString(3, user.getOrganization());
             stmt.setString(4, user.getTitle());
             stmt.setString(5, user.getEmail());
-            stmt.setString(6, user.getPassword());
+            stmt.setString(6, user.getPasswordDigest());
             stmt.setTimestamp(7, now);
             stmt.executeUpdate();
         }
@@ -52,18 +52,19 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     }
 
     private void update(User user, Connection connection) throws SQLException {
-        // Why do we have special handling for the password? Why is this bad?
-        final boolean passwordIsSet = user.getPassword() != null;
+        // Why do we have special handling for the password digest?
+        // Why is this bad?
+        final boolean passwordDigestIsSet = user.getPasswordDigest() != null;
         final String sql = "UPDATE user SET firstName=?, lastName=?, organization=?, title=?, email=?"
-                + (passwordIsSet ? ", password=?" : "") + " WHERE id=?";
+                + (passwordDigestIsSet ? ", passwordDigest=?" : "") + " WHERE id=?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getFirstName());
             stmt.setString(2, user.getLastName());
             stmt.setString(3, user.getOrganization());
             stmt.setString(4, user.getTitle());
             stmt.setString(5, user.getEmail());
-            if (passwordIsSet) {
-                stmt.setString(6, user.getPassword());
+            if (passwordDigestIsSet) {
+                stmt.setString(6, user.getPasswordDigest());
                 stmt.setLong(7, user.getId());
             } else {
                 stmt.setLong(6, user.getId());
@@ -91,7 +92,7 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     public List<User> getAll() throws DataAccessException {
         try (Connection connection = super.getConnection()) {
             try (Statement stmt = connection.createStatement()) {
-                final String sql = "SELECT id, firstName, lastName, organization, title, email, password, created FROM user ORDER BY firstName, lastName";
+                final String sql = "SELECT id, firstName, lastName, organization, title, email, passwordDigest, created FROM user ORDER BY firstName, lastName";
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     List<User> userList = new ArrayList<User>();
                     while (rs.next()) {
@@ -109,7 +110,7 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     @Override
     public User getById(Long id) throws DataAccessException {
         try (Connection connection = super.getConnection()) {
-            final String sql = "SELECT id, firstName, lastName, organization, title, email, password, created FROM user WHERE id=?";
+            final String sql = "SELECT id, firstName, lastName, organization, title, email, passwordDigest, created FROM user WHERE id=?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setLong(1, id);
                 try (ResultSet rs = stmt.executeQuery()) {
@@ -126,7 +127,7 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
     @Override
     public User getByEmail(String email) throws DataAccessException {
         try (Connection connection = super.getConnection()) {
-            final String sql = "SELECT id, firstName, lastName, organization, title, email, password, created FROM user WHERE email=?";
+            final String sql = "SELECT id, firstName, lastName, organization, title, email, passwordDigest, created FROM user WHERE email=?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setString(1, email);
                 try (ResultSet rs = stmt.executeQuery()) {
@@ -148,7 +149,7 @@ public class MySqlUserDao extends AbstractDatabaseDao implements UserDao {
         user.setOrganization(row.getString(4));
         user.setTitle(row.getString(5));
         user.setEmail(row.getString(6));
-        user.setPassword(row.getString(7));
+        user.setPasswordDigest(row.getString(7));
         user.setCreated(row.getTimestamp(8));
         return user;
     }
