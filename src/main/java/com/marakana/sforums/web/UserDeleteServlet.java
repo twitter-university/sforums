@@ -19,7 +19,6 @@ public class UserDeleteServlet extends AbstractDaoAccessServlet {
         String id = req.getParameter("id");
         if (id == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Specify 'id' request parameter");
-            return;
         } else {
             User user = new User();
             user.setId(new Long(id));
