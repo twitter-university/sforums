@@ -15,13 +15,8 @@
     </c:when>
   </c:choose>
   <form method="post" action="<c:url value='/category_save.html'/>" class="form-horizontal">
-    <div class="control-group required">
-      <label for="name" class="control-label">Name</label>
-      <div class="controls">
-        <input id="name" type="text" name="name" placeholder="Category Name" class="input-xlarge"
-          value="${fn:escapeXml(category.name)}" required/>
-      </div>
-    </div>
+    <tags:textInput name="name" label="Name" placeholder="Category Name" required="${true}" 
+        value="${category.name}"/>
     <div class="control-group">
       <label for="description" class="control-label">Description</label>
       <div class="controls">

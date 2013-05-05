@@ -35,6 +35,8 @@
             <ul class="nav">
               <li class="${nav eq 'add_category'? 'active' : ''}"><a href="<c:url value='/category_add.html'/>">Add Category</a></li>
               <li class="${nav eq 'categories'? 'active' : ''}"><a href="<c:url value='/categories.html'/>">List Categories</a></li>
+              <li class="${nav eq 'add_user'? 'active' : ''}"><a href="<c:url value='/user_add.html'/>">Add User</a></li>
+              <li class="${nav eq 'users'? 'active' : ''}"><a href="<c:url value='/users.html'/>">List Users</a></li>
             </ul>
           </div>
         </div>

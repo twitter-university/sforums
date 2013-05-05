@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
-	
+
 	<display-name>sforums</display-name>
 
 	<context-param>
@@ -40,7 +40,7 @@
 		<servlet-name>CategoryForm</servlet-name>
 		<jsp-file>/WEB-INF/jsp/categoryForm.jsp</jsp-file>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home.html</url-pattern>
@@ -74,6 +74,61 @@
 	<servlet-mapping>
 		<servlet-name>CategoryForm</servlet-name>
 		<url-pattern>/category_add.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UserList</servlet-name>
+		<servlet-class>com.marakana.sforums.web.UserListServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UserDelete</servlet-name>
+		<servlet-class>com.marakana.sforums.web.UserDeleteServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UserGet</servlet-name>
+		<servlet-class>com.marakana.sforums.web.UserGetServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UserSave</servlet-name>
+		<servlet-class>com.marakana.sforums.web.UserSaveServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UserForm</servlet-name>
+		<jsp-file>/WEB-INF/jsp/userForm.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserList</servlet-name>
+		<url-pattern>/users.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserDelete</servlet-name>
+		<url-pattern>/user_delete.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserGet</servlet-name>
+		<url-pattern>/user.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserGet</servlet-name>
+		<url-pattern>/user_edit.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserSave</servlet-name>
+		<url-pattern>/user_save.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserForm</servlet-name>
+		<url-pattern>/user_add.html</url-pattern>
 	</servlet-mapping>
 
 	<resource-ref>
