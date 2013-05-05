@@ -20,10 +20,13 @@ public class UserDeleteServlet extends AbstractDaoAccessServlet {
         if (id == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Specify 'id' request parameter");
         } else {
-            User user = new User();
-            user.setId(new Long(id));
-            super.getDaoRepository().getUserDao().delete(user);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            User user = super.getDaoRepository().getUserDao().getById(new Long(id));
+            if (user == null) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                super.getDaoRepository().getUserDao().delete(user);
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
         }
     }
 }

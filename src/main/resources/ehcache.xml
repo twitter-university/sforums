@@ -11,26 +11,26 @@
         overflowToDisk="true"/>
 
     <cache
-        name="org.hibernate.cache.StandardQueryCache"
-        maxElementsInMemory="50"
+        name="org.hibernate.cache.internal.StandardQueryCache"
+        maxElementsInMemory="500"
         eternal="false"
         timeToLiveSeconds="120"
         overflowToDisk="true"/>
         
     <cache
-        name="org.hibernate.cache.UpdateTimestampsCache"
+        name="org.hibernate.cache.spi.UpdateTimestampsCache"
         maxElementsInMemory="5000"
         eternal="true"
         overflowToDisk="true"/>
 
-    <cache name="sforums.domain.Category"
+    <cache name="com.marakana.sforums.domain.Category"
         maxElementsInMemory="100"
         eternal="false"
         timeToIdleSeconds="300"
         timeToLiveSeconds="600"
         overflowToDisk="true"/>
 
-    <cache name="sforums.domain.User"
+    <cache name="com.marakana.sforums.domain.User"
         maxElementsInMemory="100"
         eternal="false"
         timeToIdleSeconds="300"

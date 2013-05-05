@@ -1,6 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
 	<session-factory>
@@ -49,8 +50,8 @@
 		<property name="hibernate.generate_statistics">true</property>
 
 		<!-- Map all of our Hibernate-managed entity classes -->
-		<mapping class="sforums.domain.Category" />
-		<mapping class="sforums.domain.User" />
+		<mapping class="com.marakana.sforums.domain.Category" />
+		<mapping class="com.marakana.sforums.domain.User" />
 
 	</session-factory>
 </hibernate-configuration>
