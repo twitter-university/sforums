@@ -30,4 +30,9 @@
 	</bean>
 
 	<mvc:view-controller path="/home.html" view-name="home" />
+	
+	<bean name="/HelloWorld.html" class="com.marakana.sforums.web.HelloWorldController"/>
+    <bean name="/HelloWorld2.html" class="com.marakana.sforums.web.HelloWorldController2"
+          p:viewName="helloWorld"/>
+
 </beans>
