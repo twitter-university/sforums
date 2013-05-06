@@ -12,141 +12,34 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
+		<param-value>
+		  /WEB-INF/applicationContext.xml
+		</param-value>
 	</context-param>
 
-    <filter>
-        <filter-name>OpenSessionInViewFilter</filter-name>
-        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
-        <init-param>
-            <param-name>sessionFactoryBeanName</param-name>
-            <param-value>sessionFactory</param-value>
-        </init-param>
-    </filter>
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>sessionFactoryBeanName</param-name>
+			<param-value>sessionFactory</param-value>
+		</init-param>
+	</filter>
 
-    <filter-mapping>
-        <filter-name>OpenSessionInViewFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-	<servlet>
-		<servlet-name>Home</servlet-name>
-		<jsp-file>/WEB-INF/jsp/home.jsp</jsp-file>
-	</servlet>
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
-		<servlet-name>CategoryList</servlet-name>
-		<servlet-class>com.marakana.sforums.web.CategoryListServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CategoryDelete</servlet-name>
-		<servlet-class>com.marakana.sforums.web.CategoryDeleteServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CategoryGet</servlet-name>
-		<servlet-class>com.marakana.sforums.web.CategoryGetServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CategorySave</servlet-name>
-		<servlet-class>com.marakana.sforums.web.CategorySaveServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CategoryForm</servlet-name>
-		<jsp-file>/WEB-INF/jsp/categoryForm.jsp</jsp-file>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>Home</servlet-name>
-		<url-pattern>/home.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategoryList</servlet-name>
-		<url-pattern>/categories.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategoryDelete</servlet-name>
-		<url-pattern>/category_delete.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategoryGet</servlet-name>
-		<url-pattern>/category.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategoryGet</servlet-name>
-		<url-pattern>/category_edit.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategorySave</servlet-name>
-		<url-pattern>/category_save.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CategoryForm</servlet-name>
-		<url-pattern>/category_add.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UserList</servlet-name>
-		<servlet-class>com.marakana.sforums.web.UserListServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>UserDelete</servlet-name>
-		<servlet-class>com.marakana.sforums.web.UserDeleteServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>UserGet</servlet-name>
-		<servlet-class>com.marakana.sforums.web.UserGetServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>UserSave</servlet-name>
-		<servlet-class>com.marakana.sforums.web.UserSaveServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>UserForm</servlet-name>
-		<jsp-file>/WEB-INF/jsp/userForm.jsp</jsp-file>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>UserList</servlet-name>
-		<url-pattern>/users.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>UserDelete</servlet-name>
-		<url-pattern>/user_delete.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>UserGet</servlet-name>
-		<url-pattern>/user.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>UserGet</servlet-name>
-		<url-pattern>/user_edit.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>UserSave</servlet-name>
-		<url-pattern>/user_save.html</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>UserForm</servlet-name>
-		<url-pattern>/user_add.html</url-pattern>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
 
 	<resource-ref>
@@ -157,7 +50,7 @@
 	</resource-ref>
 
 	<welcome-file-list>
-		<welcome-file>home.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<security-constraint>
