@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import com.marakana.sforums.dao.DuplicateIdException;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.marakana.sforums.domain.User;
 
 public class UserSaveServlet extends AbstractDaoAccessServlet {
@@ -81,7 +82,7 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
                 req.setAttribute("success", Boolean.TRUE);
                 // remove the user from the session
                 req.getSession().removeAttribute("editUser");
-            } catch (DuplicateIdException e) {
+            } catch (DataIntegrityViolationException e) {
                 errors.add("Duplicate email: " + e.getMessage());
             }
         } else {

@@ -3,8 +3,12 @@ package com.marakana.sforums.dao;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.marakana.sforums.domain.Category;
 
+@Transactional(readOnly = true)
 public class HibernateCategoryDao extends AbstractHibernateDao implements CategoryDao {
 
     @Override
@@ -24,11 +28,13 @@ public class HibernateCategoryDao extends AbstractHibernateDao implements Catego
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void save(Category category) throws DataAccessException {
         super.save(category);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void delete(Category category) throws DataAccessException {
         super.delete(category);
     }

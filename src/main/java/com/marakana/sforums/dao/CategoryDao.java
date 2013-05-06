@@ -3,6 +3,8 @@ package com.marakana.sforums.dao;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import com.marakana.sforums.domain.Category;
 
 public interface CategoryDao {

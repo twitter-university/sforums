@@ -4,8 +4,12 @@ package com.marakana.sforums.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.marakana.sforums.domain.User;
 
+@Transactional(readOnly = true)
 public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
 
     @SuppressWarnings("unchecked")
@@ -24,6 +28,7 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void save(User user) throws DataAccessException {
         if (!user.isIdSet()) {
             user.setCreated(new Date());
@@ -32,6 +37,7 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void delete(User user) throws DataAccessException {
         super.delete(user);
     }

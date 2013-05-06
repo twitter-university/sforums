@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.marakana.sforums.dao.DaoRepository;
-import com.marakana.sforums.dao.DataAccessException;
 
 public abstract class AbstractDaoAccessServlet extends HttpServlet {
 
@@ -15,25 +16,14 @@ public abstract class AbstractDaoAccessServlet extends HttpServlet {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected static DaoRepository daoRepository;
+    private static DaoRepository daoRepository;
 
     protected final DaoRepository getDaoRepository() throws DataAccessException {
-        synchronized (AbstractDaoAccessServlet.class) {
-            if (daoRepository == null) {
-                String daoRepositoryClassName = super.getServletContext().getInitParameter(
-                        "daoRepositoryClassName");
-                try {
-                    Class<?> daoRepositoryClass = Class.forName(daoRepositoryClassName);
-                    daoRepository = (DaoRepository) daoRepositoryClass.newInstance();
-                    logger.debug("Initialized dao repository to {}", daoRepositoryClassName);
-                } catch (Exception e) {
-                    throw new DataAccessException(
-                            "Failed to initialize dao repository from init parameter [daoClassName]=["
-                                    + daoRepositoryClassName + "]", e);
-                }
-            }
-            return daoRepository;
+        if (daoRepository == null) {
+            daoRepository = WebApplicationContextUtils.getRequiredWebApplicationContext(
+                    super.getServletContext()).getBean(DaoRepository.class);
         }
+        return daoRepository;
     }
 
     protected boolean isEmpty(String s) {

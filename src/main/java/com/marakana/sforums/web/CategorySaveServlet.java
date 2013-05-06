@@ -7,7 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.marakana.sforums.dao.DuplicateIdException;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.marakana.sforums.domain.Category;
 
 public class CategorySaveServlet extends AbstractDaoAccessServlet {
@@ -34,7 +35,7 @@ public class CategorySaveServlet extends AbstractDaoAccessServlet {
             try {
                 super.getDaoRepository().getCategoryDao().save(category);
                 req.setAttribute("success", Boolean.TRUE);
-            } catch (DuplicateIdException e) {
+            } catch (DataIntegrityViolationException e) {
                 req.setAttribute("error", "Duplicate name: " + e.getMessage());
             }
         }
