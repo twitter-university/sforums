@@ -30,3 +30,6 @@
     </div>
   </form>
 </tags:page>
+<c:if test="${user == null}">
+  <c:set scope="session" var="editUser" value="${null}"/>
+</c:if>

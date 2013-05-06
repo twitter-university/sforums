@@ -24,13 +24,15 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
             throws ServletException, IOException {
         List<String> errors = new LinkedList<String>();
         req.setAttribute("errors", errors);
-        User user = new User();
-        req.setAttribute("user", user);
-
-        String id = req.getParameter("id");
-        if (!isEmpty(id)) {
-            user.setId(new Long(id));
+        // get the user from the session
+        User user = (User) req.getSession().getAttribute("editUser");
+        if (user == null) {
+            logger.debug("Editing {}", user);
+            user = new User();
+        } else {
+            logger.debug("Adding a new user");
         }
+        req.setAttribute("user", user);
 
         String firstName = req.getParameter("firstName");
         if (isEmpty(firstName)) {
@@ -77,6 +79,8 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
             try {
                 super.getDaoRepository().getUserDao().save(user);
                 req.setAttribute("success", Boolean.TRUE);
+                // remove the user from the session
+                req.getSession().removeAttribute("editUser");
             } catch (DuplicateIdException e) {
                 errors.add("Duplicate email: " + e.getMessage());
             }
