@@ -67,7 +67,7 @@
 		<junit-version>4.10</junit-version>
 		<slf4j-version>1.7.5</slf4j-version>
 		<logback-classic-version>1.0.7</logback-classic-version>
-		<hibernate-version>4.2.0.Final</hibernate-version>
+		<hibernate-version>4.2.1.Final</hibernate-version>
 		<ehcache-version>2.6.5</ehcache-version>
 	</properties>
 
