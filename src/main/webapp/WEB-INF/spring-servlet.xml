@@ -31,12 +31,27 @@
 
 	<mvc:view-controller path="/home.html" view-name="home" />
 
-	<bean name="/categories.html" class="com.marakana.sforums.web.CategoryListController" />
-	<bean name="/category.html" class="com.marakana.sforums.web.CategoryGetController" />
-	<bean name="/category_delete.html" class="com.marakana.sforums.web.CategoryDeleteController" />
+	<bean name="/categories.html"
+		class="com.marakana.sforums.web.IdentifiableEntityListController"
+		p:dao-ref="categoryDao" p:viewName="categoryList" />
 
-    <bean name="/users.html" class="com.marakana.sforums.web.UserListController" />
-    <bean name="/user.html" class="com.marakana.sforums.web.UserGetController" />
-    <bean name="/user_delete.html" class="com.marakana.sforums.web.UserDeleteController" />
+	<bean name="/category.html"
+		class="com.marakana.sforums.web.IdentifiableEntityGetController"
+		p:dao-ref="categoryDao" p:viewName="categoryView" />
 
+	<bean name="/category_delete.html"
+		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
+		p:dao-ref="categoryDao" />
+
+	<bean name="/users.html"
+		class="com.marakana.sforums.web.IdentifiableEntityListController"
+		p:dao-ref="userDao" p:viewName="userList" />
+
+	<bean name="/user.html"
+		class="com.marakana.sforums.web.IdentifiableEntityGetController"
+		p:dao-ref="userDao" p:viewName="userView" />
+
+	<bean name="/user_delete.html"
+		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
+		p:dao-ref="userDao" />
 </beans>

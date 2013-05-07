@@ -29,13 +29,7 @@
 
 	<tx:annotation-driven transaction-manager="txManager" />
 
-	<bean id="daoRepository" class="com.marakana.sforums.dao.DefaultDaoRepository">
-		<property name="categoryDao">
-			<bean class="com.marakana.sforums.dao.HibernateCategoryDao" />
-		</property>
-		<property name="userDao">
-			<bean class="com.marakana.sforums.dao.HibernateUserDao" />
-		</property>
-	</bean>
+	<bean id="categoryDao" class="com.marakana.sforums.dao.HibernateCategoryDao" />
+	<bean id="userDao" class="com.marakana.sforums.dao.HibernateUserDao" />
 
 </beans>

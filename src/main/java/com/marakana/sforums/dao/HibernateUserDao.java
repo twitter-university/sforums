@@ -9,22 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marakana.sforums.domain.User;
 
-@Transactional(readOnly = true)
-public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
+public class HibernateUserDao extends AbstractHibernateDao<User> implements UserDao {
 
-    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
     public List<User> getAll() throws DataAccessException {
-        return (List<User>) super.findAll("from User order by firstName, lastName");
+        return super.findAll("from User order by firstName, lastName");
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getByEmail(String email) throws DataAccessException {
-        return (User) super.findOne("from User where email=?", email);
-    }
-
-    @Override
-    public User getById(Long id) throws DataAccessException {
-        return (User) super.getById(User.class, id);
+        return super.findOne("from User where email=?", email);
     }
 
     @Override
@@ -34,11 +29,5 @@ public class HibernateUserDao extends AbstractHibernateDao implements UserDao {
             user.setCreated(new Date());
         }
         super.save(user);
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public void delete(User user) throws DataAccessException {
-        super.delete(user);
     }
 }

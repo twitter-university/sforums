@@ -1,7 +1,7 @@
 
 package com.marakana.sforums.dao;
 
-import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,11 +13,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.marakana.sforums.domain.IdentifiableEntity;
 
 @Repository
-public abstract class AbstractHibernateDao {
+public abstract class AbstractHibernateDao<E extends IdentifiableEntity> {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @SuppressWarnings("unchecked")
+    private final Class<E> domainClass = (Class<E>) ((ParameterizedType) getClass()
+            .getGenericSuperclass()).getActualTypeArguments()[0];
 
     private SessionFactory sessionFactory;
 
@@ -30,40 +37,53 @@ public abstract class AbstractHibernateDao {
         return sessionFactory.openSession();
     }
 
-    protected void save(Object entity) throws DataAccessException {
+    @Transactional(readOnly = false)
+    public void save(E entity) throws DataAccessException {
         Session session = this.getSession();
         session.saveOrUpdate(entity);
         session.flush(); // force insert/update
         this.logger.debug("Saved {}", entity);
     }
 
-    protected void delete(Object entity) throws DataAccessException {
+    @Transactional(readOnly = false)
+    public void delete(E entity) throws DataAccessException {
         Session session = this.getSession();
         session.delete(entity);
         session.flush(); // force delete
         this.logger.debug("Deleted {}", entity);
     }
 
-    protected Object getById(Class<?> clazz, Serializable id) throws DataAccessException {
-        Object result = this.getSession().get(clazz, id);
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public E getById(Long id) throws DataAccessException {
+        Object result = this.getSession().get(this.domainClass, id);
         this.logger.debug("Got {} by id {}", result, id);
-        return result;
+        return (E) result;
     }
 
-    protected List<?> findAll(String hqlQuery, Object... params) throws DataAccessException {
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public List<E> getAll() {
+        // this default implementation does not support any special sorting
+        return this.getSession().createCriteria(this.domainClass).list();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected List<E> findAll(String hqlQuery, Object... params) throws DataAccessException {
         Query query = this.getSession().createQuery(hqlQuery);
         this.initQueryParams(query, params);
         List<?> result = query.list();
         this.logger.debug("Found {} entities by query {}", +result.size(), hqlQuery);
-        return result;
+        return (List<E>) result;
     }
 
-    protected Object findOne(String hqlQuery, Object... params) throws DataAccessException {
+    @SuppressWarnings("unchecked")
+    protected E findOne(String hqlQuery, Object... params) throws DataAccessException {
         Query query = this.getSession().createQuery(hqlQuery);
         this.initQueryParams(query, params);
         Object result = query.uniqueResult();
         this.logger.debug("Found {} by query {}", result, hqlQuery);
-        return result;
+        return (E) result;
     }
 
     private void initQueryParams(Query query, Object... params) {
