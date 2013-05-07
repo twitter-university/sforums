@@ -31,12 +31,16 @@ public abstract class AbstractHibernateDao {
     }
 
     protected void save(Object entity) throws DataAccessException {
-        this.getSession().saveOrUpdate(entity);
+        Session session = this.getSession();
+        session.saveOrUpdate(entity);
+        session.flush(); // force insert/update
         this.logger.debug("Saved {}", entity);
     }
 
     protected void delete(Object entity) throws DataAccessException {
-        this.getSession().delete(entity);
+        Session session = this.getSession();
+        session.delete(entity);
+        session.flush(); // force delete
         this.logger.debug("Deleted {}", entity);
     }
 
