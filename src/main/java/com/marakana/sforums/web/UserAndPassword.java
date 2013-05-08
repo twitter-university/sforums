@@ -4,6 +4,7 @@ package com.marakana.sforums.web;
 import java.io.Serializable;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import com.marakana.sforums.domain.User;
 
@@ -24,6 +25,7 @@ public class UserAndPassword implements Serializable {
     }
 
     @Valid
+    @NotNull
     public User getUser() {
         return this.user;
     }
