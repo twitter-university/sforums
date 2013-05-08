@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import com.marakana.sforums.domain.User;
 
+@PasswordRequiredForNewUsers
+@VerifiedPassword
 public class UserAndPassword implements Serializable {
 
     private static final long serialVersionUID = -955350814749881282L;

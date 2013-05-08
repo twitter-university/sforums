@@ -1,6 +1,8 @@
 
 package com.marakana.sforums.web;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -35,6 +37,7 @@ public class CategoryFormController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String processSubmit(@ModelAttribute("category")
+    @Valid
     Category category, BindingResult result, SessionStatus status) {
         if (!result.hasErrors()) {
             this.dao.save(category);
