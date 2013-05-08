@@ -19,7 +19,7 @@
     <p><a href="mailto:${email}">${email}</a></p>
   </c:if>
   <p>Since <fmt:formatDate value="${user.created}" pattern="MMMMM d, yyyy hh:mma" /></p>
-  <c:url var="editUrl" value="/user_edit.html">
+  <c:url var="editUrl" value="/user_form.html">
     <c:param name="id" value="${user.id}" />
   </c:url>
   <c:url var="deleteUrl" value="/user_delete.html">

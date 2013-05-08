@@ -23,7 +23,7 @@
             <c:url var="viewUrl" value="/category.html">
               <c:param name="id" value="${category.id}"/>
             </c:url>
-            <c:url var="editUrl" value="/category_edit.html">
+            <c:url var="editUrl" value="/category_form.html">
               <c:param name="id" value="${category.id}"/>
             </c:url>
             <c:url var="deleteUrl" value="/category_delete.html">

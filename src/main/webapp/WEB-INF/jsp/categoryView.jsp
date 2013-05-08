@@ -5,7 +5,7 @@
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <tags:page title="${category.name}" nav="categories">
   <p>${f:convertToHtmlLineBreaks(category.description)}</p>
-  <c:url var="editUrl" value="/category_edit.html">
+  <c:url var="editUrl" value="/category_form.html">
     <c:param name="id" value="${category.id}" />
   </c:url>
   <c:url var="deleteUrl" value="/category_delete.html">

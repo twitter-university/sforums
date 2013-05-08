@@ -56,14 +56,10 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Modification Actions</web-resource-name>
-			<url-pattern>/category_save.html</url-pattern>
+			<url-pattern>/category_form.html</url-pattern>
 			<url-pattern>/category_delete.html</url-pattern>
-			<url-pattern>/category_add.html</url-pattern>
-			<url-pattern>/category_edit.html</url-pattern>
-			<url-pattern>/user_save.html</url-pattern>
+			<url-pattern>/user_form.html</url-pattern>
 			<url-pattern>/user_delete.html</url-pattern>
-			<url-pattern>/user_add.html</url-pattern>
-			<url-pattern>/user_edit.html</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>user</role-name>

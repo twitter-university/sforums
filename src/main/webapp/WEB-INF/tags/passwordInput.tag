@@ -13,7 +13,7 @@
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 
 <tags:formInput path="${pageScope.path}" label="${pageScope.label}" required="${pageScope.required}">
-  <form:input path="${pageScope.path}"
+  <form:password path="${pageScope.path}"
     cssClass="${empty pageScope.cssClass? 'input-xlarge' : pageScope.cssClass}"
     autocomplete="${pageScope.autocomplete}" />
 </tags:formInput>
