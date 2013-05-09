@@ -30,4 +30,11 @@
     </function-signature>
   </function>
 
+  <function>
+    <name>getType</name>
+    <function-class>com.marakana.sforums.web.JSPFunctions</function-class>
+    <function-signature>
+      java.lang.String getType(java.lang.Object) 
+    </function-signature>
+  </function>
 </taglib>

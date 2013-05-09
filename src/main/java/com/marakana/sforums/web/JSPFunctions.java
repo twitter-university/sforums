@@ -26,4 +26,8 @@ public class JSPFunctions {
                 length - Math.min(3, length))
                 + "...";
     }
+
+    public static String getType(Object o) {
+        return o == null ? null : o.getClass().getName();
+    }
 }
