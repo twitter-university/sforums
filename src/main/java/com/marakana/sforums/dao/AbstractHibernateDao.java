@@ -8,10 +8,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.StaleObjectStateException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate4.HibernateOptimisticLockingFailureException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +44,16 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity> {
 
     @Transactional(readOnly = false)
     public void save(E entity) throws DataAccessException {
-        Session session = this.getSession();
-        session.saveOrUpdate(entity);
-        session.flush(); // force insert/update
-        this.logger.debug("Saved {}", entity);
+        try {
+            Session session = this.getSession();
+            session.saveOrUpdate(entity);
+            session.flush(); // force insert/update
+            this.logger.debug("Saved {}", entity);
+        } catch (StaleObjectStateException | HibernateOptimisticLockingFailureException e) {
+            throw new ConcurrencyFailureException("Failed to save stale/modified " + entity, e);
+        } catch (ConstraintViolationException e) {
+            throw new DataIntegrityViolationException("Constraint failed when saving " + entity, e);
+        }
     }
 
     @Transactional(readOnly = false)

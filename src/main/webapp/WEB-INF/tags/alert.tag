@@ -13,4 +13,5 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>${title}</strong>
   ${message}
+  <jsp:doBody/>
 </div>

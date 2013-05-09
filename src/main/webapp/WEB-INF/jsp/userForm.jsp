@@ -12,6 +12,7 @@
     <tags:alert type="success" title="Success!" message="Saved user."/>
   </c:if>
   <form:form action="user_form.html" commandName="userAndPassword" cssClass="form-horizontal">
+    <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
       <tags:textInput path="firstName" label="First Name" required="${false}"/>
       <tags:textInput path="lastName" label="Last Name" required="${false}"/>
