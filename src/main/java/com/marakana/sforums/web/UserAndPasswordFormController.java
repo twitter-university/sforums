@@ -1,11 +1,7 @@
 
 package com.marakana.sforums.web;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.validation.Valid;
-import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
@@ -22,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.marakana.sforums.dao.UserDao;
 import com.marakana.sforums.domain.User;
+import com.marakana.sforums.service.UserStoreService;
 
 @Controller
 @RequestMapping("/user_form.html")
@@ -29,9 +26,12 @@ import com.marakana.sforums.domain.User;
 public class UserAndPasswordFormController {
     private final UserDao dao;
 
+    private final UserStoreService userStoreService;
+
     @Autowired
-    public UserAndPasswordFormController(UserDao dao) {
+    public UserAndPasswordFormController(UserDao dao, UserStoreService userStoreService) {
         this.dao = dao;
+        this.userStoreService = userStoreService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -48,10 +48,11 @@ public class UserAndPasswordFormController {
         if (!result.hasErrors()) {
             try {
                 User user = userAndPassword.getUser();
+                String password = null;
                 if (userAndPassword.isPasswordVerified()) {
-                    user.setPasswordDigest(md5Digest(userAndPassword.getPassword()));
+                    password = userAndPassword.getPassword();
                 }
-                this.dao.save(user);
+                this.userStoreService.store(user, password);
                 status.setComplete();
                 return "redirect:user.html?id=" + user.getId() + "&success=true";
             } catch (DataIntegrityViolationException e) {
@@ -61,15 +62,5 @@ public class UserAndPasswordFormController {
             }
         }
         return "userForm";
-    }
-
-    private static String md5Digest(String in) {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] digest = messageDigest.digest(in.getBytes());
-            return DatatypeConverter.printHexBinary(digest);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to get MD5 digest", e);
-        }
     }
 }
