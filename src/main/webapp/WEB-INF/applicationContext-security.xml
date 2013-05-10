@@ -14,6 +14,9 @@
 		<intercept-url pattern="^/(user|category)_(form|delete)\.html.*$"
 			requires-channel="https" access="ROLE_ADMIN" />
 
+		<intercept-url pattern="^/user_profile\.html.*$"
+			requires-channel="https" access="ROLE_USER" />
+
 		<intercept-url pattern="^/login.html.*$"
 			requires-channel="https" method="POST" />
 
@@ -53,4 +56,5 @@
 		<beans:constructor-arg value="6d6172616b616e61" />
 	</beans:bean>
 
+	<global-method-security secured-annotations="enabled" />
 </beans:beans>

@@ -33,4 +33,5 @@
 	<bean id="userDao" class="com.marakana.sforums.dao.HibernateUserDao" />
 
 	<bean id="userStoreService" class="com.marakana.sforums.service.DefaultUserStoreService" />
+	<bean id="userContextService" class="com.marakana.sforums.service.DefaultUserContextService" />
 </beans>

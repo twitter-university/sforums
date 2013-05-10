@@ -33,6 +33,10 @@
     <mvc:view-controller path="/login.html" view-name="login" />
     <mvc:view-controller path="/access_denied.html" view-name="accessDenied" />
 
+    <mvc:interceptors>
+        <bean class="com.marakana.sforums.web.UserContextInterceptor" />
+    </mvc:interceptors>
+
 	<bean name="/categories.html"
 		class="com.marakana.sforums.web.IdentifiableEntityListController"
 		p:dao-ref="categoryDao" p:viewName="categoryList" />

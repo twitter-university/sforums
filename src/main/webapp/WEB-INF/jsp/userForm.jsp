@@ -11,7 +11,7 @@
   <c:if test="${not empty param.success}">
     <tags:alert type="success" title="Success!" message="Saved user."/>
   </c:if>
-  <form:form action="user_form.html" commandName="userAndPassword" cssClass="form-horizontal">
+  <form:form action="user_${requestScope.profile? 'profile' : 'form'}.html" commandName="userAndPassword" cssClass="form-horizontal">
     <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
       <tags:textInput path="firstName" label="First Name" required="${false}"/>
@@ -19,8 +19,10 @@
       <tags:textInput path="title" label="Title" />
       <tags:textInput path="organization" label="Organization" />
       <tags:textInput path="email" label="Email" required="${false}" autocomplete="off"/>
-      <tags:booleanInput path="enabled" label="Enabled"/>
-      <tags:booleanInput path="admin" label="Admin"/>
+      <c:if test="${not requestScope.profile}">
+        <tags:booleanInput path="enabled" label="Enabled"/>
+        <tags:booleanInput path="admin" label="Admin"/>
+      </c:if>
     </spring:nestedPath>
     <c:set var="passwordRequired" value="${not userAndPassword.user.idSet}"/>
     <tags:passwordInput path="password" label="Password" autocomplete="off" 

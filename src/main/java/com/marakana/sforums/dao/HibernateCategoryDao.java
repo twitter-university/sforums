@@ -4,6 +4,7 @@ package com.marakana.sforums.dao;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marakana.sforums.domain.Category;
@@ -20,5 +21,19 @@ public class HibernateCategoryDao extends AbstractHibernateDao<Category> impleme
     @Override
     public Category getByName(String name) throws DataAccessException {
         return super.findOne("from Category where name=?", name);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @Override
+    @Transactional(readOnly = false)
+    public void save(Category entity) throws DataAccessException {
+        super.save(entity);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(Category entity) throws DataAccessException {
+        super.delete(entity);
     }
 }
