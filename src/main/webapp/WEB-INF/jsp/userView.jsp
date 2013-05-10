@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <tags:page title="${fn:escapeXml(user.name)}" nav="users">
@@ -19,20 +20,22 @@
     <p><a href="mailto:${email}">${email}</a></p>
   </c:if>
   <p>Since <fmt:formatDate value="${user.created}" pattern="MMMMM d, yyyy hh:mma" /></p>
-  <c:url var="editUrl" value="/user_form.html">
-    <c:param name="id" value="${user.id}" />
-  </c:url>
-  <c:url var="deleteUrl" value="/user_delete.html">
-    <c:param name="id" value="${user.id}" />
-  </c:url>
-  <c:url var="usersUrl" value="/users.html"/>
-  <p>
-    <a class="editUrl btn btn-primary" href="${editUrl}">Edit</a>
-    <a class="deleteUrl btn btn-danger" href="${deleteUrl}">Delete</a>
-  </p>
-  <script type="text/javascript">
-    $(document).ready(function() {
-        executeDeleteAndRedirect(".deleteUrl", "${usersUrl}");
-    });
-  </script>
+  <security:authorize ifAllGranted="ROLE_ADMIN">
+    <c:url var="editUrl" value="/user_form.html">
+      <c:param name="id" value="${user.id}" />
+    </c:url>
+    <c:url var="deleteUrl" value="/user_delete.html">
+      <c:param name="id" value="${user.id}" />
+    </c:url>
+    <c:url var="usersUrl" value="/users.html"/>
+    <p>
+      <a class="editUrl btn btn-primary" href="${editUrl}">Edit</a>
+      <a class="deleteUrl btn btn-danger" href="${deleteUrl}">Delete</a>
+    </p>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          executeDeleteAndRedirect(".deleteUrl", "${usersUrl}");
+      });
+    </script>
+  </security:authorize>
 </tags:page>

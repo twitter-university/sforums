@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 
@@ -28,10 +29,20 @@
           <a class="brand" href="<c:url value='/home.html'/>">Marakana SForums</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="${nav eq 'add_category'? 'active' : ''}"><a href="<c:url value='/category_form.html'/>">Add Category</a></li>
+              <security:authorize ifAllGranted="ROLE_ADMIN">
+                <li class="${nav eq 'add_category'? 'active' : ''}"><a href="<c:url value='/category_form.html'/>">Add Category</a></li>
+              </security:authorize>
               <li class="${nav eq 'categories'? 'active' : ''}"><a href="<c:url value='/categories.html'/>">List Categories</a></li>
-              <li class="${nav eq 'add_user'? 'active' : ''}"><a href="<c:url value='/user_form.html'/>">Add User</a></li>
+              <security:authorize ifAllGranted="ROLE_ADMIN">
+                <li class="${nav eq 'add_user'? 'active' : ''}"><a href="<c:url value='/user_form.html'/>">Add User</a></li>
+              </security:authorize>
               <li class="${nav eq 'users'? 'active' : ''}"><a href="<c:url value='/users.html'/>">List Users</a></li>
+              <security:authorize ifAllGranted="ROLE_USER">
+                <li><a href="<c:url value='/logout.html'/>">Logout</a></li>
+              </security:authorize>
+              <security:authorize ifNotGranted="ROLE_USER">
+                <li><a href="<c:url value='/login.html'/>">Login</a></li>
+              </security:authorize>
             </ul>
           </div>
         </div>

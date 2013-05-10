@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <tags:page title="Categories" nav="categories">
@@ -15,7 +16,9 @@
             <th class="number">Id</th>
             <th>Name</th>
             <th>Description</th>
-            <th></th>
+            <security:authorize ifAllGranted="ROLE_ADMIN">
+              <th></th>
+            </security:authorize>
           </tr>
         </thead>
         <tbody>
@@ -35,20 +38,23 @@
                 <a href="${viewUrl}">${fn:escapeXml(category.name)}</a>
               </td>
               <td>${f:trimToLength(category.description, 40)}</td>
-              <td>
-                <a class="editUrl" href="${editUrl}"><i class="icon-pencil"></i></a>
-                <a class="deleteUrl" href="${deleteUrl}"><i class="icon-trash"></i></a>
-              </td>
+              <security:authorize ifAllGranted="ROLE_ADMIN">
+                <td>
+                  <a class="editUrl" href="${editUrl}"><i class="icon-pencil"></i></a>
+                  <a class="deleteUrl" href="${deleteUrl}"><i class="icon-trash"></i></a>
+                </td>
+              </security:authorize>
             </tr>
           </c:forEach>
         </tbody>
       </table>
     </c:otherwise>
   </c:choose>
-  
-  <script type="text/javascript">
-    $(document).ready(function() {
-      executeDeleteAndRemoveContainer(".deleteUrl", "tr");
-	});
-  </script>
+  <security:authorize ifAllGranted="ROLE_ADMIN">
+    <script type="text/javascript">
+      $(document).ready(function() {
+        executeDeleteAndRemoveContainer(".deleteUrl", "tr");
+  	});
+    </script>
+  </security:authorize>
 </tags:page>
