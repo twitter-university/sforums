@@ -31,10 +31,6 @@ public class DefaultUserDetails implements UserDetails {
         return this.user;
     }
 
-    public Long getSalt() {
-        return this.user.getId();
-    }
-
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(2);
@@ -65,10 +61,12 @@ public class DefaultUserDetails implements UserDetails {
         return true;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @Override
     public boolean isEnabled() {
         return this.user.isEnabled();
     }

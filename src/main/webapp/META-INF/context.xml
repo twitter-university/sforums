@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Context [ ]>
 <Context>
-  <!-- java:comp/env/jdbc/sforums -> java:jdbc/sforums -->
-  <ResourceLink name="jdbc/sforums" global="jdbc/sforums"/>
-  
-  <!-- For simplicity sake, we are hard coding everyone to be in 'user' role -->
-  <Realm className="org.apache.catalina.realm.DataSourceRealm"
-    dataSourceName="jdbc/sforums" userTable="user" userNameCol="email"
-    userCredCol="passwordDigest" userRoleTable="user"
-    roleNameCol="&quot;user&quot;" digest="MD5" />
+	<!-- java:comp/env/jdbc/sforums -> java:jdbc/sforums -->
+	<ResourceLink name="jdbc/sforums" global="jdbc/sforums" />
 </Context>

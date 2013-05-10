@@ -22,6 +22,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
         this.dao = dao;
     }
 
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException,
             DataAccessException {
         logger.debug("Loading user details for '{}'", email);

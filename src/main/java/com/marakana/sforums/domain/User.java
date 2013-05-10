@@ -90,7 +90,7 @@ public class User extends IdentifiableEntity {
         this.email = email;
     }
 
-    @Column(length = 32, nullable = false)
+    @Column(length = 80, nullable = false)
     public String getPasswordDigest() {
         return this.passwordDigest;
     }
