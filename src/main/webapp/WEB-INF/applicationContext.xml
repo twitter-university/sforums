@@ -31,6 +31,9 @@
 
 	<bean id="categoryDao" class="com.marakana.sforums.dao.HibernateCategoryDao" />
 	<bean id="userDao" class="com.marakana.sforums.dao.HibernateUserDao" />
+    <bean id="forumDao" class="com.marakana.sforums.dao.HibernateForumDao"/>
+    <bean id="topicDao" class="com.marakana.sforums.dao.HibernateTopicDao"/>
+    <bean id="replyDao" class="com.marakana.sforums.dao.HibernateReplyDao"/>
 
 	<bean id="userStoreService" class="com.marakana.sforums.service.DefaultUserStoreService" />
 	<bean id="userContextService" class="com.marakana.sforums.service.DefaultUserContextService" />

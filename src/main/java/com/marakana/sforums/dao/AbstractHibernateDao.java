@@ -80,28 +80,41 @@ public abstract class AbstractHibernateDao<E extends IdentifiableEntity> {
     }
 
     @SuppressWarnings("unchecked")
-    protected List<E> findAll(String hqlQuery, Object... params) throws DataAccessException {
-        Query query = this.getSession().createQuery(hqlQuery);
-        this.initQueryParams(query, params);
+    protected List<E> findAll(Query query) throws DataAccessException {
         List<?> result = query.list();
-        this.logger.debug("Found {} entities by query {}", +result.size(), hqlQuery);
+        this.logger.debug("Found {} entities by query {}", +result.size(), query.getQueryString());
         return (List<E>) result;
     }
 
+    protected List<E> findAll(String hqlQuery, Object... params) throws DataAccessException {
+        return this.findAll(this.initQueryParams(this.createQuery(hqlQuery), params));
+    }
+
     @SuppressWarnings("unchecked")
-    protected E findOne(String hqlQuery, Object... params) throws DataAccessException {
-        Query query = this.getSession().createQuery(hqlQuery);
-        this.initQueryParams(query, params);
+    protected E findOne(Query query) throws DataAccessException {
         Object result = query.uniqueResult();
-        this.logger.debug("Found {} by query {}", result, hqlQuery);
+        this.logger.debug("Found {} by query {}", result, query.getQueryString());
         return (E) result;
     }
 
-    private void initQueryParams(Query query, Object... params) {
+    protected E findOne(String hqlQuery, Object... params) throws DataAccessException {
+        return this.findOne(this.initQueryParams(this.createQuery(hqlQuery), params));
+    }
+
+    protected Query createQuery(String hqlQuery) {
+        return this.getSession().createQuery(hqlQuery);
+    }
+
+    protected Query getNamedQuery(String queryName) {
+        return this.getSession().getNamedQuery(queryName);
+    }
+
+    private Query initQueryParams(Query query, Object... params) {
         if (params != null && params.length > 0) {
             for (int i = 0; i < params.length; i++) {
                 query.setParameter(i, params[i]);
             }
         }
+        return query;
     }
 }

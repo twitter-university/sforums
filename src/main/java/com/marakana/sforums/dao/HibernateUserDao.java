@@ -1,4 +1,3 @@
-
 package com.marakana.sforums.dao;
 
 import java.util.List;
@@ -8,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marakana.sforums.domain.User;
 
-public class HibernateUserDao extends AbstractHibernateDao<User> implements UserDao {
+public class HibernateUserDao extends AbstractTimeStampedEntityHibernateDao<User> implements
+        UserDao {
 
     @Transactional(readOnly = true)
     public List<User> getAll() throws DataAccessException {
@@ -19,12 +19,5 @@ public class HibernateUserDao extends AbstractHibernateDao<User> implements User
     @Override
     public User getByEmail(String email) throws DataAccessException {
         return super.findOne("from User where email=?", email);
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public void save(User user) throws DataAccessException {
-        user.markCreated();
-        super.save(user);
     }
 }
