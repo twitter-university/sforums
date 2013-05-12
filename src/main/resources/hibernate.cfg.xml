@@ -52,6 +52,10 @@
 		<!-- Map all of our Hibernate-managed entity classes -->
 		<mapping class="com.marakana.sforums.domain.Category" />
 		<mapping class="com.marakana.sforums.domain.User" />
+		<mapping class="com.marakana.sforums.domain.Forum" />
+		<mapping class="com.marakana.sforums.domain.Post" />
+		<mapping class="com.marakana.sforums.domain.Topic" />
+		<mapping class="com.marakana.sforums.domain.Reply" />
 
 	</session-factory>
 </hibernate-configuration>

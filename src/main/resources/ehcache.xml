@@ -37,4 +37,24 @@
         timeToLiveSeconds="600"
         overflowToDisk="true"/>
 
+    <cache name="com.marakana.sforums.domain.Forum"
+        maxElementsInMemory="50"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+        
+    <cache name="com.marakana.sforums.domain.Topic"
+        maxElementsInMemory="200"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+        
+    <cache name="com.marakana.sforums.domain.Reply"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
 </ehcache>
