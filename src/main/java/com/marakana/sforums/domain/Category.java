@@ -1,9 +1,16 @@
 
 package com.marakana.sforums.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,6 +29,8 @@ public class Category extends IdentifiableEntity {
     private String name;
 
     private String description;
+
+    private List<Forum> forums = new ArrayList<Forum>();
 
     @Size(max = 64)
     @NotEmpty
@@ -42,6 +51,16 @@ public class Category extends IdentifiableEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("name")
+    public List<Forum> getForums() {
+        return forums;
+    }
+
+    public void setForums(List<Forum> forums) {
+        this.forums = forums;
     }
 
     @Override

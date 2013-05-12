@@ -1,9 +1,16 @@
 
 package com.marakana.sforums.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -34,6 +41,8 @@ public class User extends TimestampedEntity {
     private boolean admin = false;
 
     private boolean enabled = true;
+
+    private List<Post> posts = new ArrayList<Post>();
 
     @Size(max = 64)
     @Column(length = 64)
@@ -104,6 +113,16 @@ public class User extends TimestampedEntity {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("created")
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
