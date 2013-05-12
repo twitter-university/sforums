@@ -1,16 +1,12 @@
 
 package com.marakana.sforums.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -21,13 +17,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class User extends IdentifiableEntity {
+public class User extends TimestampedEntity {
 
     private static final long serialVersionUID = 2993569267760500809L;
 
-    private String firstName;
-
-    private String lastName;
+    private Name name = new Name();
 
     private String organization;
 
@@ -36,8 +30,6 @@ public class User extends IdentifiableEntity {
     private String email;
 
     private String passwordDigest;
-
-    private Date created;
 
     private boolean admin = false;
 
@@ -53,28 +45,15 @@ public class User extends IdentifiableEntity {
         this.title = title;
     }
 
-    @Size(max = 20)
-    @NotEmpty
+    @Valid
     @NotNull
-    @Column(length = 20, nullable = false)
-    public String getFirstName() {
-        return this.firstName;
+    @Embedded
+    public Name getName() {
+        return this.name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Size(max = 20)
-    @NotEmpty
-    @NotNull
-    @Column(length = 20, nullable = false)
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(Name name) {
+        this.name = name;
     }
 
     @Email
@@ -107,17 +86,6 @@ public class User extends IdentifiableEntity {
 
     public void setOrganization(String organization) {
         this.organization = organization;
-    }
-
-    @Past
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getCreated() {
-        return this.created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
     }
 
     @Column(nullable = false)
@@ -158,13 +126,8 @@ public class User extends IdentifiableEntity {
                 .hashCode();
     }
 
-    @Transient
-    public String getName() {
-        return this.getFirstName() + " " + this.getLastName();
-    }
-
     @Override
     public String toString() {
-        return this.getName();
+        return this.getName().toString();
     }
 }
