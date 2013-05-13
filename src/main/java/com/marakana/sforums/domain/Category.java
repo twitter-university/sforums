@@ -1,3 +1,4 @@
+
 package com.marakana.sforums.domain;
 
 public class Category extends IdentifiableEntity {
@@ -40,13 +41,13 @@ public class Category extends IdentifiableEntity {
 
     @Override
     public int hashCode() {
-        return this.getName() == null ? System.identityHashCode(this)
-                : 17 * this.getName().hashCode();
+        return this.getName() == null ? System.identityHashCode(this) : 17 * this.getName()
+                .hashCode();
     }
 
     @Override
     public String toString() {
-        return "category with name: " + this.name;
+        return this.getName();
     }
 
 }
