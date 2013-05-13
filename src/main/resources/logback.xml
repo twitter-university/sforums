@@ -10,6 +10,7 @@
 	</appender>
 	<logger name="com.marakana.sforums" level="TRACE" />
 	<logger name="net.sf.ehcache" level="INFO" />
+	<logger name="org.springframework.security" level="INFO" />
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>

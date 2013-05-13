@@ -11,8 +11,11 @@
 
 	<http path-type="regex" realm="SForums" access-denied-page="/access_denied.html">
 
-		<intercept-url pattern="^/(user|category)_(form|delete)\.html.*$"
+		<intercept-url pattern="^/user_form\.html.*$"
 			requires-channel="https" access="ROLE_ADMIN" />
+
+		<intercept-url pattern="^/(user|category)_(form|delete)\.html.*$"
+			access="ROLE_ADMIN" />
 
 		<intercept-url pattern="^/user_profile\.html.*$"
 			requires-channel="https" access="ROLE_USER" />

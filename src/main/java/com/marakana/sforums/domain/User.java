@@ -97,7 +97,7 @@ public class User extends TimestampedEntity {
         this.organization = organization;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT")
     public boolean isAdmin() {
         return admin;
     }
@@ -106,7 +106,7 @@ public class User extends TimestampedEntity {
         this.admin = admin;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT")
     public boolean isEnabled() {
         return enabled;
     }
