@@ -14,11 +14,11 @@
   <form:form action="user_form.html" commandName="userAndPassword" cssClass="form-horizontal">
     <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
-      <tags:textInput path="firstName" label="First Name" required="${false}"/>
-      <tags:textInput path="lastName" label="Last Name" required="${false}"/>
+      <tags:textInput path="firstName" label="First Name" required="${true}"/>
+      <tags:textInput path="lastName" label="Last Name" required="${true}"/>
       <tags:textInput path="title" label="Title" />
       <tags:textInput path="organization" label="Organization" />
-      <tags:textInput path="email" label="Email" required="${false}" autocomplete="off"/>
+      <tags:textInput path="email" label="Email" required="${true}" autocomplete="off"/>
     </spring:nestedPath>
     <c:set var="passwordRequired" value="${not userAndPassword.user.idSet}"/>
     <tags:passwordInput path="password" label="Password" autocomplete="off" 

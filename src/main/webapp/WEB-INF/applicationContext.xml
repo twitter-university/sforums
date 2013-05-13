@@ -29,6 +29,8 @@
 
 	<tx:annotation-driven transaction-manager="txManager" />
 
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
 	<bean id="categoryDao" class="com.marakana.sforums.dao.HibernateCategoryDao" />
 	<bean id="userDao" class="com.marakana.sforums.dao.HibernateUserDao" />
 
