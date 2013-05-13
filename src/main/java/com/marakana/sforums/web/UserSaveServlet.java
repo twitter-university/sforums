@@ -27,10 +27,10 @@ public class UserSaveServlet extends AbstractDaoAccessServlet {
         // get the user from the session
         User user = (User) req.getSession().getAttribute("editUser");
         if (user == null) {
-            logger.debug("Editing {}", user);
+            super.logger.debug("Adding a new user");
             user = new User();
         } else {
-            logger.debug("Adding a new user");
+            super.logger.debug("Editing {}", user);
         }
         req.setAttribute("user", user);
 

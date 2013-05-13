@@ -60,7 +60,7 @@ public class Category extends IdentifiableEntity {
 
     @Override
     public String toString() {
-        return "category with name: " + this.name;
+        return this.getName();
     }
 
 }

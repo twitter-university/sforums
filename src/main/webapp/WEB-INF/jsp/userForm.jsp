@@ -17,11 +17,11 @@
     </c:when>
   </c:choose>
   <form method="post" action="<c:url value='/user_save.html'/>" class="form-horizontal">
-    <tags:textInput name="firstName" label="First Name" value="${user.firstName}" required="${false}"/>
-    <tags:textInput name="lastName" label="Last Name" value="${user.lastName}" required="${false}"/>
+    <tags:textInput name="firstName" label="First Name" value="${user.firstName}" required="${true}"/>
+    <tags:textInput name="lastName" label="Last Name" value="${user.lastName}" required="${true}"/>
     <tags:textInput name="title" label="Title" value="${user.title}"/>
     <tags:textInput name="organization" label="Organization" value="${user.organization}"/>
-    <tags:textInput name="email" label="Email" value="${user.email}" type="email" required="${false}" autocomplete="off"/>
+    <tags:textInput name="email" label="Email" value="${user.email}" type="email" required="${true}" autocomplete="off"/>
     <tags:textInput name="password" label="Password" type="password" autocomplete="off"/>
     <tags:textInput name="passwordVerification" label="Password Verification" type="password" autocomplete="off"/>
     <div class="form-actions">
