@@ -10,7 +10,8 @@
 	</appender>
 	<logger name="com.marakana.sforums" level="TRACE" />
 	<logger name="net.sf.ehcache" level="INFO" />
-	<logger name="org.springframework.security" level="INFO" />
+    <logger name="org.springframework.security.web.FilterChainProxy" level="INFO" />
+    <logger name="org.springframework.security.web.util.RegexRequestMatcher" level="INFO" />
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
