@@ -120,7 +120,7 @@ public class User extends IdentifiableEntity {
         this.created = created;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT")
     public boolean isAdmin() {
         return admin;
     }
@@ -129,7 +129,7 @@ public class User extends IdentifiableEntity {
         this.admin = admin;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT")
     public boolean isEnabled() {
         return enabled;
     }

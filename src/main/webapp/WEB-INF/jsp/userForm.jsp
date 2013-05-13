@@ -14,11 +14,11 @@
   <form:form action="user_${requestScope.profile? 'profile' : 'form'}.html" commandName="userAndPassword" cssClass="form-horizontal">
     <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
-      <tags:textInput path="firstName" label="First Name" required="${false}"/>
-      <tags:textInput path="lastName" label="Last Name" required="${false}"/>
+      <tags:textInput path="firstName" label="First Name" required="${true}"/>
+      <tags:textInput path="lastName" label="Last Name" required="${true}"/>
       <tags:textInput path="title" label="Title" />
       <tags:textInput path="organization" label="Organization" />
-      <tags:textInput path="email" label="Email" required="${false}" autocomplete="off"/>
+      <tags:textInput path="email" label="Email" required="${true}" autocomplete="off"/>
       <c:if test="${not requestScope.profile}">
         <tags:booleanInput path="enabled" label="Enabled"/>
         <tags:booleanInput path="admin" label="Admin"/>
