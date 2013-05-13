@@ -27,10 +27,11 @@ public abstract class AbstractHibernateDao {
     }
 
     protected Session getSession() throws HibernateException {
-        return sessionFactory.openSession();
+        return this.sessionFactory.getCurrentSession();
     }
 
-    protected void save(Object entity) throws DataAccessException {
+    public void save(Object entity) throws DataAccessException {
+        this.logger.trace("Saving {}", entity);
         Session session = this.getSession();
         session.saveOrUpdate(entity);
         session.flush(); // force insert/update
