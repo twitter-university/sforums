@@ -18,8 +18,10 @@
 		<!-- Update the database schema on startup -->
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
-		<!-- Enable Hibernate's automatic session context management -->
-		<property name="hibernate.current_session_context_class">thread</property>
+        <!-- Use Spring's management of Hibernate's session context -->
+        <property name="hibernate.current_session_context_class">
+            org.springframework.orm.hibernate4.SpringSessionContext
+        </property>
 
 		<!-- Log all executed SQL -->
 		<property name="hibernate.show_sql">true</property>
