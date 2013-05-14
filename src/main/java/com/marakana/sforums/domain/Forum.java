@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.QueryHint;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -90,9 +91,14 @@ public class Forum extends IdentifiableEntity {
         this.topics = topics;
     }
 
+    @Transient
+    public String getCategoryAndName() {
+        return this.getCategory() + "/" + this.getName();
+    }
+
     @Override
     public String toString() {
-        return this.getCategory() + "/" + this.getName();
+        return this.getCategoryAndName();
     }
 
     @Override
