@@ -7,11 +7,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
-<tags:page title="User Form" nav="add_user">
+<tags:page title="User Form" nav="${requestScope.profile? 'user_profile' : 'add_user'}">
   <c:if test="${not empty param.success}">
     <tags:alert type="success" title="Success!" message="Saved user."/>
   </c:if>
-  <form:form action="user_${requestScope.profile? 'profile' : 'form'}.html" commandName="userAndPassword" cssClass="form-horizontal">
+  <form:form commandName="userAndPassword" cssClass="form-horizontal">
     <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
       <spring:nestedPath path="name">
