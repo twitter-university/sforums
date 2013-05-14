@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.marakana.sforums.domain.Forum;
 import com.marakana.sforums.domain.Topic;
 
-public class HibernateTopicDao extends AbstractHibernateDao<Topic> implements TopicDao {
+public class HibernateTopicDao extends AbstractTimeStampedEntityHibernateDao<Topic> implements
+        TopicDao {
 
     @Transactional(readOnly = true)
     @Override

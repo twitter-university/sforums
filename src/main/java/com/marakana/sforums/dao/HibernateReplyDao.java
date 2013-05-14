@@ -1,3 +1,4 @@
+
 package com.marakana.sforums.dao;
 
 import java.util.List;
@@ -7,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marakana.sforums.domain.Reply;
 
-public class HibernateReplyDao extends AbstractHibernateDao<Reply> implements ReplyDao {
+public class HibernateReplyDao extends AbstractTimeStampedEntityHibernateDao<Reply> implements
+        ReplyDao {
 
     @Transactional(readOnly = true)
     @Override
