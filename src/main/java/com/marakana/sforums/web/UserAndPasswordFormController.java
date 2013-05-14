@@ -8,6 +8,8 @@ import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +41,14 @@ public class UserAndPasswordFormController {
     Long id) {
         User user = id == null ? new User() : this.dao.getById(id);
         return new ModelAndView("userForm").addObject(new UserAndPassword(user));
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setAllowedFields(new String[] {
+                "user.email", "user.name.*", "user.organization", "user.title", "user.enabled",
+                "user.admin", "password", "passwordVerification"
+        });
     }
 
     @RequestMapping(method = RequestMethod.POST)
