@@ -30,12 +30,13 @@
 	</bean>
 
 	<mvc:view-controller path="/home.html" view-name="home" />
-    <mvc:view-controller path="/login.html" view-name="login" />
-    <mvc:view-controller path="/access_denied.html" view-name="accessDenied" />
+	<mvc:view-controller path="/login.html" view-name="login" />
+	<mvc:view-controller path="/access_denied.html"
+		view-name="accessDenied" />
 
-    <mvc:interceptors>
-        <bean class="com.marakana.sforums.web.UserContextInterceptor" />
-    </mvc:interceptors>
+	<mvc:interceptors>
+		<bean class="com.marakana.sforums.web.UserContextInterceptor" />
+	</mvc:interceptors>
 
 	<bean name="/categories.html"
 		class="com.marakana.sforums.web.IdentifiableEntityListController"
@@ -60,6 +61,30 @@
 	<bean name="/user_delete.html"
 		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
 		p:dao-ref="userDao" />
+
+	<bean name="/forums.html"
+		class="com.marakana.sforums.web.IdentifiableEntityListController"
+		p:dao-ref="forumDao" p:viewName="forumList" />
+
+	<bean name="/forum.html"
+		class="com.marakana.sforums.web.IdentifiableEntityGetController"
+		p:dao-ref="forumDao" p:viewName="forumView" />
+
+	<bean name="/forum_delete.html"
+		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
+		p:dao-ref="forumDao" />
+
+	<bean name="/topic.html"
+		class="com.marakana.sforums.web.IdentifiableEntityGetController"
+		p:dao-ref="topicDao" p:viewName="topicView" />
+
+	<bean name="/topic_delete.html"
+		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
+		p:dao-ref="topicDao" />
+
+	<bean name="/reply_delete.html"
+		class="com.marakana.sforums.web.IdentifiableEntityDeleteController"
+		p:dao-ref="replyDao" />
 
 	<bean id="exceptionResolver"
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

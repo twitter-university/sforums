@@ -2,15 +2,43 @@ body {
   padding-top: 60px;
 }
 
-.number {
+.number,table thead th.number,table tbody td.number {
   text-align: right;
 }
 
 form .required {
-    font-weight: bold;
+  font-weight: bold;
 }
+
 form .required label:after {
-    color: #e32;
-    content: '*';
-    display:inline;
+  color: #e32;
+  content: '*';
+  display: inline;
+}
+
+div.post {
+  margin-bottom: 15px;
+  border-color: #333;
+}
+
+.post,.post .header,.post .message {
+  border: 1px solid #ccc;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.post .header {
+  margin-bottom: 5px;
+}
+
+.post .author {
+  float: left;
+  width: 50%;
+  font-weight: bold;
+}
+
+.post .dateTime {
+  float: right;
+  width: 50%;
+  text-align: right;
 }

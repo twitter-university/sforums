@@ -19,6 +19,7 @@
             <th>Organization</th>
             <th>Email</th>
             <th>Since</th>
+            <th class="number">Posts</th>
             <security:authorize ifAllGranted="ROLE_ADMIN">
               <th></th>
             </security:authorize>
@@ -48,6 +49,7 @@
               <td>
                 <fmt:formatDate value="${user.created}" pattern="MMM yyyy" />
               </td>
+              <td class="number">${fn:length(user.posts)}</td>
               <security:authorize ifAllGranted="ROLE_ADMIN">
                 <td>
                   <a class="editUrl" href="${editUrl}"><i class="icon-pencil"></i></a>

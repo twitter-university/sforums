@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
@@ -20,6 +21,7 @@
     <p><a href="mailto:${email}">${email}</a></p>
   </c:if>
   <p>Since <fmt:formatDate value="${user.created}" pattern="MMMMM d, yyyy hh:mma" /></p>
+  <p><spring:message code="postCountMessage" arguments="${fn:length(user.posts)}"/></p>
   <security:authorize ifAllGranted="ROLE_ADMIN">
     <c:url var="editUrl" value="/user_form.html">
       <c:param name="id" value="${user.id}" />

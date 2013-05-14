@@ -5,7 +5,10 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="f" uri="/WEB-INF/functions.tld"%>
 <tags:page title="${category.name}" nav="categories">
-  <p>${f:convertToHtmlLineBreaks(category.description)}</p>
+  <ul class="breadcrumb">
+    <li class="active">${fn:escapeXml(category.name)}</li>
+  </ul>
+  
   <security:authorize ifAllGranted="ROLE_ADMIN">
     <c:url var="editUrl" value="/category_form.html">
       <c:param name="id" value="${category.id}" />
@@ -14,14 +17,19 @@
       <c:param name="id" value="${category.id}" />
     </c:url>
     <c:url var="categoriesUrl" value="/categories.html"/>
-    <p>
+    <div class="pull-right">
       <a class="editUrl btn btn-primary" href="${editUrl}">Edit</a>
       <a class="deleteUrl btn btn-danger" href="${deleteUrl}">Delete</a>
-    </p>
-    <script type="text/javascript">
-      $(document).ready(function() {
-      	executeDeleteAndRedirect(".deleteUrl", "${categoriesUrl}");
-      });
-    </script>
+    </div>
   </security:authorize>
+
+  <p>${f:convertToHtmlLineBreaks(category.description)}</p>
+
+  <tags:showForumList forums="${category.forums}"/>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      executeDeleteAndRedirect(".deleteUrl", "${categoriesUrl}");
+    });
+  </script>
 </tags:page>
