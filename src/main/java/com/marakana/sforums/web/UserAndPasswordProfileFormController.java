@@ -3,6 +3,8 @@ package com.marakana.sforums.web;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,9 +24,13 @@ import com.marakana.sforums.service.UserContextService;
 import com.marakana.sforums.service.UserStoreService;
 
 @Controller
-@RequestMapping("/user_profile.html")
+@RequestMapping({
+        "/user_profile.html", "/user_register.html"
+})
 @SessionAttributes("userAndPassword")
 public class UserAndPasswordProfileFormController {
+    private static final Logger logger = LoggerFactory
+            .getLogger(UserAndPasswordProfileFormController.class);
 
     private final UserContextService userContextService;
 
@@ -40,8 +46,14 @@ public class UserAndPasswordProfileFormController {
     @RequestMapping(method = RequestMethod.GET)
     @ModelAttribute("userAndPassword")
     public ModelAndView setupForm() {
-        return new ModelAndView("userForm").addObject(
-                new UserAndPassword(this.userContextService.getUserFromContext())).addObject(
+        User user = this.userContextService.getUserFromContext();
+        if (user == null) {
+            logger.debug("Setting up form for new user");
+            user = new User();
+        } else {
+            logger.debug("Setting up form for {}", user);
+        }
+        return new ModelAndView("userForm").addObject(new UserAndPassword(user)).addObject(
                 "profile", Boolean.TRUE);
     }
 
@@ -57,12 +69,17 @@ public class UserAndPasswordProfileFormController {
         if (!result.hasErrors()) {
             try {
                 User user = userAndPassword.getUser();
+                logger.debug("Processing submit for {}", user);
                 String password = null;
                 if (userAndPassword.isPasswordVerified()) {
                     password = userAndPassword.getPassword();
                 }
+                logger.debug("Storing {}", user);
                 this.userStoreService.store(user, password);
                 status.setComplete();
+                logger.debug("Logging in {}", user);
+                this.userContextService.addUserToContext(user, password);
+                logger.debug("Done {}", user);
                 return "redirect:user_profile.html?success=true";
             } catch (DataIntegrityViolationException e) {
                 result.rejectValue("user.email", "DuplicateEmailFailure");

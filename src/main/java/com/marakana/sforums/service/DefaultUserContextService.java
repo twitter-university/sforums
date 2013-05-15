@@ -3,6 +3,7 @@ package com.marakana.sforums.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,5 +40,30 @@ public class DefaultUserContextService implements UserContextService {
                     principal);
         }
         return null;
+    }
+
+    @Override
+    public void addUserToContext(User user, String password) {
+        User authUser = this.getUserFromContext();
+        if (authUser == null) {
+            if (user == null) {
+                throw new NullPointerException("User must not be null");
+            } else if (user.isEnabled()) {
+                logger.trace("Logging in {}", user);
+                DefaultUserDetails userDetails = new DefaultUserDetails(user);
+                SecurityContext ctx = SecurityContextHolder.getContext();
+                ctx.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails,
+                        password, userDetails.getAuthorities()));
+                logger.debug("Logged in {}", user);
+            } else {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Not logging in disabled user: " + user);
+                }
+            }
+        } else if (authUser.equals(user)) {
+            logger.debug("User {} already logged in", user);
+        } else {
+            throw new IllegalStateException("Already logged in as another user: " + user);
+        }
     }
 }

@@ -49,6 +49,7 @@
                 </li>
               </security:authorize>
               <security:authorize ifNotGranted="ROLE_USER">
+                <li><a href="<c:url value='/user_register.html'/>">Register</a></li>
                 <li><a href="<c:url value='/login.html'/>">Login</a></li>
               </security:authorize>
             </ul>

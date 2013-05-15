@@ -23,6 +23,9 @@
 		<intercept-url pattern="^/user_profile\.html.*$"
 			requires-channel="https" access="ROLE_USER" />
 
+        <intercept-url pattern="^/user_register\.html.*$"
+            requires-channel="https" access="ROLE_ANONYMOUS" />			
+
 		<intercept-url pattern="^/login.html.*$"
 			requires-channel="https" method="POST" />
 

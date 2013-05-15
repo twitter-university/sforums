@@ -11,7 +11,7 @@
   <c:if test="${not empty param.success}">
     <tags:alert type="success" title="Success!" message="Saved user."/>
   </c:if>
-  <form:form action="user_${requestScope.profile? 'profile' : 'form'}.html" commandName="userAndPassword" cssClass="form-horizontal">
+  <form:form commandName="userAndPassword" cssClass="form-horizontal">
     <tags:showFormErrors name="userAndPassword"/>
     <spring:nestedPath path="user">
       <tags:textInput path="firstName" label="First Name" required="${true}"/>
