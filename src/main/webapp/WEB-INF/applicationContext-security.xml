@@ -17,7 +17,7 @@
 		<intercept-url pattern="^/(topic|reply)_form\.html.*$"
 			access="ROLE_USER" />
 
-		<intercept-url pattern="^/(user|category|forum|topic|reply)_delete\.html.*$"
+		<intercept-url pattern="^/(category|user|forum|topic|reply)_delete\.html.*$"
 			access="ROLE_ADMIN" />
 
 		<intercept-url pattern="^/user_profile\.html.*$"
