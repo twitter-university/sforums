@@ -20,6 +20,12 @@ public class HibernateForumDao extends AbstractHibernateDao<Forum> implements Fo
 
     @Transactional(readOnly = true)
     @Override
+    public Forum getById(Long id) throws DataAccessException {
+        return super.findOne(super.getNamedQuery("forum-by-id-fetch-all").setParameter("id", id));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Forum> getAll() throws DataAccessException {
         return super.findAll(super.getNamedQuery("all-forums"));
     }

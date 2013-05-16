@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -34,7 +36,13 @@ import org.hibernate.validator.constraints.NotEmpty;
         @NamedQuery(name = "all-topics", query = "from Topic order by created", hints = {
             @QueryHint(name = "org.hibernate.cacheable", value = "true")
         }),
-        @NamedQuery(name = "topic-by-forum-and-title", query = "from Topic where forum=:forum and title=:title")
+        @NamedQuery(name = "topic-by-forum-and-title", query = "from Topic where forum=:forum and title=:title"),
+        @NamedQuery(name = "topic-by-id-fetch-all", query = "select distinct t from Topic as t "
+                + "inner join fetch t.author inner join fetch t.forum f "
+                + "inner join fetch f.category left join fetch t.replies r "
+                + "inner join fetch r.author where t.id=:id", hints = {
+            @QueryHint(name = "org.hibernate.cacheable", value = "true")
+        })
 })
 public class Topic extends Post {
 
@@ -70,6 +78,7 @@ public class Topic extends Post {
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @OrderBy("created")
+    @LazyCollection(LazyCollectionOption.EXTRA)
     public List<Reply> getReplies() {
         return replies;
     }

@@ -23,6 +23,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -36,7 +38,12 @@ import org.hibernate.validator.constraints.NotEmpty;
         @NamedQuery(name = "all-forums", query = "from Forum order by category.name, name", hints = {
             @QueryHint(name = "org.hibernate.cacheable", value = "true")
         }),
-        @NamedQuery(name = "forum-by-category-and-name", query = "from Forum where category=:category and name=:name")
+        @NamedQuery(name = "forum-by-category-and-name", query = "from Forum where category=:category and name=:name"),
+        @NamedQuery(name = "forum-by-id-fetch-all", query = "select distinct f from Forum as f "
+                + "inner join fetch f.category left join fetch f.topics as t "
+                + "inner join fetch t.author where f.id=:id", hints = {
+            @QueryHint(name = "org.hibernate.cacheable", value = "true")
+        })
 })
 public class Forum extends IdentifiableEntity {
 
@@ -83,6 +90,7 @@ public class Forum extends IdentifiableEntity {
 
     @OneToMany(mappedBy = "forum", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @OrderBy("created")
+    @LazyCollection(LazyCollectionOption.EXTRA)
     public List<Topic> getTopics() {
         return topics;
     }
