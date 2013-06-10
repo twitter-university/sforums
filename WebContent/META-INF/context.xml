@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE Context [ ]>
-<Context>
-  <ResourceLink name="jdbc/sforums" global="jdbc/sforums"/>
-</Context>
